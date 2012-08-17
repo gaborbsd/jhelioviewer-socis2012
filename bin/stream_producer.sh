@@ -8,6 +8,7 @@ SRCDIR=img
 TMPDIR=./tmp
 SECPERIMG=3
 RESOLUTION=1024x1024
+FPS=1
 
 usage()
 {
@@ -15,7 +16,7 @@ usage()
 	echo "$0 -h"
 }
 
-while getopts ":d:hK:n:r:t:" opt; do
+while getopts ":d:f:hK:n:r:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -24,6 +25,9 @@ while getopts ":d:hK:n:r:t:" opt; do
         d)
                 SRCDIR=${OPTARG}
                 ;;
+	f)
+		FPS=${OPTARG}
+		;;
         K)
                 KAKADUPATH=${OPTARG}
                 ;;
@@ -65,20 +69,28 @@ then
 	exit 2
 fi
 
-_RESOLUTION=`echo ${RESOLUTION} | grep -oE '^[[:digit:]]+x[[:digit:]]$'`
+_RESOLUTION=`echo ${RESOLUTION} | grep -oE '^[[:digit:]]+x[[:digit:]]+$'`
 
-if [ -z ${RESOLUTION} ]
+if [ -z ${_RESOLUTION} ]
 then
 	echo "Invalid resolution specification. It can only contain digits and an x letter separating the two dimensions." >&2
 	exit 2
 fi
 
-_SECPERIMG=`echo ${RESOLUTION} | grep -oE '^[[:digit:]]+$'`
+_SECPERIMG=`echo ${SECPERIMG} | grep -oE '^[[:digit:]]+$'`
 
-if [ -z ${SECPERIMG} ]
+if [ -z ${_SECPERIMG} ]
 then
 	echo "Invalid second per image specification. It can only contain digits." >&2
 	exit 2
+fi
+
+_FPS=`echo ${FPS} | grep -oE '^[[:digit:]]+$'`
+
+if [ -z ${_FPS} ]
+then
+        echo "Invalid fps specification. It can only contain digits." >&2
+        exit 2
 fi
 
 # Create temp directory if does not exist
@@ -96,6 +108,11 @@ do
 
 		# Stream to stdout
 		ffmpeg -loop_input -i ${TMPDIR}/foo.bmp -t ${SECPERIMG} -s ${RESOLUTION} -vcodec libtheora -f ogg -
+
+		#
+		# XXX: for some reason it does not work with fps=1, it needs more investigation
+		#
+		#ffmpeg -loop_input -i ${TMPDIR}/foo.bmp -t ${SECPERIMG} -r ${FPS} -s ${RESOLUTION} -vcodec libtheora -f ogg -
 
 		# Clean up temporary file
 		rm -f ${TMPDIR}/foo.bmp
