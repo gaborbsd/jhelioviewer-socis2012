@@ -1,0 +1,24 @@
+<!DOCTYPE configuration PUBLIC "-//JHelioviewer//DTD Channel Configuration//EN"
+  "conf.dtd">
+<configuration>
+  <global>
+    <stream-server>150.214.150.68</stream-server>
+    <stream-port>4551</stream-port>
+    <stream-pass>changeme</stream-pass>
+    <stream-type>video/ogg</stream-type>
+
+    <jnlp-path>jhelioviewer.jnlp</jnlp-path>
+
+    <img-base>/home/gabor/img</img-base>
+  </global>
+  
+  <entry mode="loop-dir">
+    <mount-point>full512.ogg</mount-point>
+    <name>Full 512x512 - May 26</name>
+    <desc>Full image of the Sun in 512x512 resolution from 2012 May 26</desc>
+    <source>AIA/1600/2012/05/26</source>
+    <fps>1</fps>
+    <resolution>512x512</resolution>
+    <sec-per-img>3</sec-per-img>
+  </entry>
+</configuration>

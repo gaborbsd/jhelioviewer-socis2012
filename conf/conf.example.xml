@@ -1,0 +1,68 @@
+<!DOCTYPE configuration PUBLIC "-//JHelioviewer//DTD Channel Configuration//EN"
+  "conf.dtd">
+<configuration>
+
+  <!--
+	This section contains the global configuration option,
+	like parameters of the Icecast streaming server or some
+	paths on the server.
+  -->
+
+  <global>
+
+    <!-- Hostname or IP of the Icecast server -->
+    <stream-server>localhost</stream-server>
+
+    <!-- Portname of the Icecast server -->
+    <stream-port>8000</stream-port>
+
+    <!-- Password for the Icecast server -->
+    <stream-pass>changeme</stream-pass>
+
+    <!-- Mime type of the streamed content -->
+    <stream-type>video/ogg</stream-type>
+
+    <!-- Path of the JNLP file to launch the app -->
+    <jnlp-path>jhelioviewer.jnlp</jnlp-path>
+
+    <!-- Path of the JPEG 2000 images -->
+    <img-base>/home/gabor/img</img-base>
+  </global>
+  
+  <!--
+	One entry describes one streaming channel that can
+	have very different properties. The mode parameter
+	can be either loop-dir or realtime. The former means
+	constantly repeatig the images from one folder
+	(i.e. one day) and the latter means always emitting
+	the last image that arrived.
+  -->
+  <entry mode="loop-dir">
+
+    <!-- The mount point for the streaming server and the
+	 name of the named pipe that is used for communication
+	 of the components -->
+    <mount-point>full512.ogg</mount-point>
+
+    <!-- Name of the stream to dispaly for the end user -->
+    <name>Full 512x512 - May 26</name>
+
+    <!-- A longer description -->
+    <desc>Full view of the Sun in 512x512 resolution from 2012 May 26</desc>
+
+    <!-- The source directory if loop-dir mode is used -->
+    <source>AIA/1600/2012/05/26</source>
+
+    <!-- Frame per seconds in the generated video -->
+    <fps>1</fps>
+
+    <!-- Resolution of the generated video (1:1 proportion) -->
+    <resolution>512x512</resolution>
+
+    <!-- Number of seconds that one image should be displayed.
+	 It should be tuned considering the frequency with
+	 which images arrive. Furthermore, if chosen too low
+	 the buffer stream will frequently underrun. -->
+    <sec-per-img>3</sec-per-img>
+  </entry>
+</configuration>
