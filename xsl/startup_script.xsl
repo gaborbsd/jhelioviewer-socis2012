@@ -20,7 +20,11 @@ then
     mkfifo <xsl:value-of select="mount-point"/>
 fi
 
-nohup <xsl:value-of select="$producer"/> -d <xsl:value-of select="source"/> -r <xsl:value-of select="resolution"/> -n <xsl:value-of select="sec-per-img"/> > <xsl:value-of select="mount-point"/> &amp;
-nohup <xsl:value-of select="$consumer"/> -H <xsl:value-of select="//stream-server"/> -p <xsl:value-of select="//stream-port"/> -l <xsl:value-of select="//stream-pass"/> -m <xsl:value-of select="mount-point"/> -s <xsl:value-of select="mount-point"/> &amp;
+nohup ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="//img-base"/>/<xsl:value-of select="source"/> \
+    -f <xsl:value-of select="fps"/> -r <xsl:value-of select="resolution"/> -n <xsl:value-of select="sec-per-img"/> \
+    &gt;&gt; <xsl:value-of select="mount-point"/> &amp;
+nohup ./<xsl:value-of select="$consumer"/> -H localhost -p <xsl:value-of select="//stream-port"/> \
+    -l <xsl:value-of select="//stream-pass"/> -m <xsl:value-of select="mount-point"/> \
+    -s <xsl:value-of select="mount-point"/> &amp;
   </xsl:template>
 </xsl:stylesheet>
