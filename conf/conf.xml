@@ -11,6 +11,26 @@
 
     <img-base>/home/gabor/img</img-base>
   </global>
+
+  <entry mode="loop-dir">
+    <mount-point>full2048.ogg</mount-point>
+    <name>Full 2048x2048 - May 26</name>
+    <desc>Full image of the Sun in 2048x2048 resolution from 2012 May 26</desc>
+    <source>AIA/1600/2012/05/26</source>
+    <fps>1</fps>
+    <resolution>2048x2048</resolution>
+    <sec-per-img>3</sec-per-img>
+  </entry>
+
+  <entry mode="loop-dir">
+    <mount-point>full1024.ogg</mount-point>
+    <name>Full 1024x1024 - May 26</name>
+    <desc>Full image of the Sun in 1024x1024 resolution from 2012 May 26</desc>
+    <source>AIA/1600/2012/05/26</source>
+    <fps>1</fps>
+    <resolution>1024x1024</resolution>
+    <sec-per-img>3</sec-per-img>
+  </entry>
   
   <entry mode="loop-dir">
     <mount-point>full512.ogg</mount-point>
