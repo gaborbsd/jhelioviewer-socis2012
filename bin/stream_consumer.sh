@@ -10,7 +10,7 @@ DESC="JHelioviewer Video Channel"
 
 usage()
 {
-	echo "$0 [-H host] [-p port] [-l pass] [-m mount_point] [-s pipe]"
+	echo "$0 [-H host] [-p port] [-l pass] [-m mount_point] [-s pipe] [-n name] [-d desc]"
 	echo "$0 -h"
 }
 

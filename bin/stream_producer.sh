@@ -12,7 +12,7 @@ FPS=4
 
 usage()
 {
-	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-t tmpdir]"
+	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-f fps] [-t tmpdir]"
 	echo "$0 -h"
 }
 
