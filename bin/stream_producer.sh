@@ -103,13 +103,15 @@ while :
 do
 	for f in `find ${SRCDIR} -type f -regex '.*\.jp2$' | sort`
 	do
+		tmpfile=`mktemp --tmpdir=${TMPDIR} -d`
+
 		# Extract JPEG 2000 image
-		env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${TMPDIR}/foo.bmp
+		env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp
 
 		# Stream to stdout
-		ffmpeg -loop_input -i ${TMPDIR}/foo.bmp -t ${SECPERIMG} -r ${FPS} -s ${RESOLUTION} -vcodec libtheora -f ogg -
+		ffmpeg -loop_input -i ${tmpfile}.bmp -t ${SECPERIMG} -r ${FPS} -s ${RESOLUTION} -vcodec libtheora -f ogg -
 
 		# Clean up temporary file
-		rm -f ${TMPDIR}/foo.bmp
+		rm -f ${tmpfile}.bmp
 	done
 done
