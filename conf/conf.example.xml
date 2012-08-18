@@ -37,7 +37,7 @@
 	(i.e. one day) and the latter means always emitting
 	the last image that arrived.
   -->
-  <entry mode="loop-dir">
+  <entry xml:id="full512" mode="loop-dir">
 
     <!-- The mount point for the streaming server and the
 	 name of the named pipe that is used for communication

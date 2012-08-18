@@ -12,7 +12,7 @@
     <img-base>/home/gabor/img/delphi.nascom.nasa.gov/jp2</img-base>
   </global>
 
-  <entry mode="loop-dir">
+  <entry xml:id="full2048" mode="loop-dir">
     <mount-point>full2048.ogg</mount-point>
     <name>Full 2048x2048 - May 26</name>
     <desc>Full image of the Sun in 2048x2048 resolution from 2012 May 26</desc>
@@ -22,7 +22,7 @@
     <sec-per-img>3</sec-per-img>
   </entry>
 
-  <entry mode="loop-dir">
+  <entry xml:id="full1024" mode="loop-dir">
     <mount-point>full1024.ogg</mount-point>
     <name>Full 1024x1024 - May 26</name>
     <desc>Full image of the Sun in 1024x1024 resolution from 2012 May 26</desc>
@@ -32,7 +32,7 @@
     <sec-per-img>3</sec-per-img>
   </entry>
   
-  <entry mode="loop-dir">
+  <entry xml:id="full512" mode="loop-dir">
     <mount-point>full512.ogg</mount-point>
     <name>Full 512x512 - May 26</name>
     <desc>Full image of the Sun in 512x512 resolution from 2012 May 26</desc>

@@ -19,4 +19,5 @@
 <!ELEMENT resolution (#PCDATA)>
 <!ELEMENT sec-per-img (#PCDATA)>
 
-<!ATTLIST entry mode (loop-dir|realtime) "loop-dir">
+<!ATTLIST entry	xml:id ID #IMPLIED
+		mode (loop-dir|realtime) "loop-dir">
