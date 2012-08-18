@@ -9,7 +9,7 @@
 
     <jnlp-path>jhelioviewer.jnlp</jnlp-path>
 
-    <img-base>/home/gabor/img</img-base>
+    <img-base>/home/gabor/img/delphi.nascom.nasa.gov/jp2</img-base>
   </global>
 
   <entry mode="loop-dir">
