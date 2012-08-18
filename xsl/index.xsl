@@ -10,7 +10,7 @@
     <html lang="en">
       <head>
         <title>JHelioviewer Channels Index</title>
-	<xsl:value-of select="$html.head.common"/>
+	<xsl:call-template name="html.head.common"/>
       </head>
 
       <body>

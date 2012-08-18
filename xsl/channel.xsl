@@ -24,14 +24,14 @@
     <html lang="en">
       <head>
 	<title><xsl:value-of select="name"/></title>
-	<xsl:value-of select="$html.head.common"/>
+	<xsl:call-template name="html.head.common"/>
       </head>
 
       <body>
 	<article>
 	<h1><xsl:value-of select="name"/></h1>
 
-	<video preload="metadata" loop="loop" autoplay="autoplay">
+	<video preload="metadata" loop="loop" autoplay="autoplay" poster="img/splash{resolution}.png">
 	  <source>
 	    <xsl:attribute name="src">
 	      <xsl:value-of select="concat('http://', //stream-server, ':', //stream-port, '/', mount-point)"/>

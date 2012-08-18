@@ -57,7 +57,7 @@
     <fps>1</fps>
 
     <!-- Resolution of the generated video (1:1 proportion) -->
-    <resolution>512x512</resolution>
+    <resolution>512</resolution>
 
     <!-- Number of seconds that one image should be displayed.
 	 It should be tuned considering the frequency with
