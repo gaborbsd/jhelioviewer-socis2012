@@ -9,11 +9,12 @@
   <xsl:template match="/" name="generate.index">
     <html lang="en">
       <head>
-        <meta charset="utf-8"/>
         <title>JHelioviewer Channels Index</title>
+	<xsl:value-of select="$html.head.common"/>
       </head>
 
       <body>
+	<article>
 	<p>JHelioviewer provides the following streaming channels
 	  with videos of the Sun. The videos are actually created
 	  from static images and are encoded in Ogg Theora format.
@@ -32,6 +33,12 @@
 	    <dd><xsl:value-of select="desc"/></dd>
 	  </xsl:for-each>
 	</dl>
+
+	<aside>
+	  <xsl:call-template name="html.launch.app"/>
+	</aside>
+
+	</article>
       </body>
     </html>
   </xsl:template>

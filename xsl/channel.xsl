@@ -23,11 +23,12 @@
   <xsl:template match="entry" mode="channel.page">
     <html lang="en">
       <head>
-	<meta charset="utf-8"/>
 	<title><xsl:value-of select="name"/></title>
+	<xsl:value-of select="$html.head.common"/>
       </head>
 
       <body>
+	<article>
 	<h1><xsl:value-of select="name"/></h1>
 
 	<video preload="metadata" loop="loop" autoplay="autoplay">
@@ -50,9 +51,10 @@
 	  and browse the images on your computer.
 	</video>
 
-	<p>The JHelioviewer application has some more advanced features that allow
-	  you browsing and manipulating the images on your computer. To launch
-	  the application, <a href="{//jnlp-path}">click here</a>.</p>
+	<aside>
+	<xsl:call-template name="html.launch.app"/>
+	</aside>
+	</article>
       </body>
     </html>
   </xsl:template>
