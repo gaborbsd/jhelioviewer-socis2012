@@ -17,7 +17,7 @@
     <name>Full 2048x2048 - May 26</name>
     <desc>Full image of the Sun in 2048x2048 resolution from 2012 May 26</desc>
     <source>AIA/1600/2012/05/26</source>
-    <fps>1</fps>
+    <fps>4</fps>
     <resolution>2048</resolution>
     <sec-per-img>3</sec-per-img>
   </entry>
@@ -27,7 +27,7 @@
     <name>Full 1024x1024 - May 26</name>
     <desc>Full image of the Sun in 1024x1024 resolution from 2012 May 26</desc>
     <source>AIA/1600/2012/05/26</source>
-    <fps>1</fps>
+    <fps>4</fps>
     <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
   </entry>
@@ -37,7 +37,7 @@
     <name>Full 512x512 - May 26</name>
     <desc>Full image of the Sun in 512x512 resolution from 2012 May 26</desc>
     <source>AIA/1600/2012/05/26</source>
-    <fps>1</fps>
+    <fps>4</fps>
     <resolution>512</resolution>
     <sec-per-img>3</sec-per-img>
   </entry>

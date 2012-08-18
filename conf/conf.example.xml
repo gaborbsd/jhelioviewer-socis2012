@@ -54,7 +54,7 @@
     <source>AIA/1600/2012/05/26</source>
 
     <!-- Frame per seconds in the generated video -->
-    <fps>1</fps>
+    <fps>4</fps>
 
     <!-- Resolution of the generated video (1:1 proportion) -->
     <resolution>512</resolution>

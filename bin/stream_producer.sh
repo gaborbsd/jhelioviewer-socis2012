@@ -8,7 +8,7 @@ SRCDIR=img
 TMPDIR=./tmp
 SECPERIMG=3
 RESOLUTION=1024x1024
-FPS=1
+FPS=4
 
 usage()
 {
@@ -107,12 +107,7 @@ do
 		env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${TMPDIR}/foo.bmp
 
 		# Stream to stdout
-		ffmpeg -loop_input -i ${TMPDIR}/foo.bmp -t ${SECPERIMG} -s ${RESOLUTION} -vcodec libtheora -f ogg -
-
-		#
-		# XXX: for some reason it does not work with fps=1, it needs more investigation
-		#
-		#ffmpeg -loop_input -i ${TMPDIR}/foo.bmp -t ${SECPERIMG} -r ${FPS} -s ${RESOLUTION} -vcodec libtheora -f ogg -
+		ffmpeg -loop_input -i ${TMPDIR}/foo.bmp -t ${SECPERIMG} -r ${FPS} -s ${RESOLUTION} -vcodec libtheora -f ogg -
 
 		# Clean up temporary file
 		rm -f ${TMPDIR}/foo.bmp
