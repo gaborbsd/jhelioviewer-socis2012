@@ -34,6 +34,14 @@
       </xsl:if>
     </xsl:variable>
 
+    <xsl:variable name="region">
+      <xsl:if test="region">
+	<xsl:text> -c "{</xsl:text>
+	<xsl:value-of select=".//top"/>,<xsl:value-of select=".//left"/>},{<xsl:value-of select=".//height"/>,<xsl:value-of select=".//width"/>
+	<xsl:text>}"</xsl:text>
+      </xsl:if>
+    </xsl:variable>
+
 if [ ! -p <xsl:value-of select="mount-point"/> ]
 then
     rm -f <xsl:value-of select="mount-point"/>
@@ -41,8 +49,8 @@ then
 fi
 
 nohup ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="//img-base"/>/<xsl:value-of select="source"/> \
-    -f <xsl:value-of select="fps"/> <xsl:value-of select="$reduce"/> -n <xsl:value-of select="sec-per-img"/> \
-    &gt;&gt; <xsl:value-of select="mount-point"/> &amp;
+    -f <xsl:value-of select="fps"/> <xsl:value-of select="$reduce"/> <xsl:value-of select="$region"/> \
+    -n <xsl:value-of select="sec-per-img"/> &gt;&gt; <xsl:value-of select="mount-point"/> &amp;
 nohup ./<xsl:value-of select="$consumer"/> -H localhost -p <xsl:value-of select="//stream-port"/> \
     -l <xsl:value-of select="//stream-pass"/> -m <xsl:value-of select="mount-point"/> \
     -s <xsl:value-of select="mount-point"/> -n "<xsl:value-of select="name"/>" \
