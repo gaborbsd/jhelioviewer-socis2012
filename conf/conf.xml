@@ -40,5 +40,75 @@
     <fps>4</fps>
     <resolution>512</resolution>
     <sec-per-img>3</sec-per-img>
+    <subchannels>
+      <channel href="topleft512"/>
+      <channel href="topright512"/>
+      <channel href="bottomleft512"/>
+      <channel href="bottomright512"/>
+    </subchannels>
+  </entry>
+
+  <entry xml:id="topleft512" mode="loop-dir">
+    <mount-point>topleft512.ogg</mount-point>
+    <name>Top-left 512x512 - May 26</name>
+    <desc>Top-left view of the Sun in 512x512 resolution from 2012 May 26</desc>
+    <source>AIA/1600/2012/05/26</source>
+    <fps>4</fps>
+    <resolution>1024</resolution>
+    <sec-per-img>3</sec-per-img>
+    <region>
+      <top>0.0</top>
+      <left>0.0</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
+  </entry>
+
+  <entry xml:id="topright512" mode="loop-dir">
+    <mount-point>topright512.ogg</mount-point>
+    <name>Top-right 512x512 - May 26</name>
+    <desc>Top-right view of the Sun in 512x512 resolution from 2012 May 26</desc>
+    <source>AIA/1600/2012/05/26</source>
+    <fps>4</fps>
+    <resolution>1024</resolution>
+    <sec-per-img>3</sec-per-img>
+    <region>
+      <top>0.0</top>
+      <left>0.5</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
+  </entry>
+
+  <entry xml:id="bottomleft512" mode="loop-dir">
+    <mount-point>bottomleft512.ogg</mount-point>
+    <name>Bottom-left 512x512 - May 26</name>
+    <desc>Bottom-left view of the Sun in 512x512 resolution from 2012 May 26</desc>
+    <source>AIA/1600/2012/05/26</source>
+    <fps>4</fps>
+    <resolution>1024</resolution>
+    <sec-per-img>3</sec-per-img>
+    <region>
+      <top>0.5</top>
+      <left>0.0</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
+  </entry>
+
+  <entry xml:id="bottomright512" mode="loop-dir">
+    <mount-point>bottomright512.ogg</mount-point>
+    <name>Bottom-right 512x512 - May 26</name>
+    <desc>Bottom-right view of the Sun in 512x512 resolution from 2012 May 26</desc>
+    <source>AIA/1600/2012/05/26</source>
+    <fps>4</fps>
+    <resolution>1024</resolution>
+    <sec-per-img>3</sec-per-img>
+    <region>
+      <top>0.5</top>
+      <left>0.5</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
   </entry>
 </configuration>
