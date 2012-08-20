@@ -40,6 +40,14 @@
 	    <xsl:attribute name="type">
 	      <xsl:value-of select="//stream-type"/>
 	    </xsl:attribute>
+
+	    <xsl:for-each select="subchannels/channel">
+	      <xsl:variable name="idRef" select="@href"/>
+
+	      <xsl:attribute name="data-subchannel-{position()}">
+		<xsl:value-of select="concat(//entry[@xml:id = $idRef]/mount-point, '.html')"/>
+	      </xsl:attribute>
+	    </xsl:for-each>
 	  </source>
 
 	  <!-- Fallback -->
