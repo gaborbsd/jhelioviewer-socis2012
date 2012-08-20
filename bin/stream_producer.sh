@@ -7,16 +7,15 @@ KAKADUPATH=./bin
 SRCDIR=img
 TMPDIR=./tmp
 SECPERIMG=3
-RESOLUTION=1024x1024
 FPS=4
 
 usage()
 {
-	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-f fps] [-t tmpdir]"
+	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-f fps] [-R reducefactor] [-t tmpdir]"
 	echo "$0 -h"
 }
 
-while getopts ":d:f:hK:n:r:t:" opt; do
+while getopts ":d:f:hK:n:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -35,8 +34,11 @@ while getopts ":d:f:hK:n:r:t:" opt; do
                 SECPERIMG=${OPTARG}
                 ;;
         r)
-                RESOLUTION=${OPTARG}
+                RESOLUTION="-s ${OPTARG}"
                 ;;
+	R)
+		REDUCE="-reduce ${OPTARG}"
+		;;
         t)
                 TMPDIR=${OPTARG}
                 ;;
@@ -69,12 +71,15 @@ then
 	exit 2
 fi
 
-_RESOLUTION=`echo ${RESOLUTION} | grep -oE '^[[:digit:]]+x[[:digit:]]+$'`
-
-if [ -z ${_RESOLUTION} ]
+if [ ! -z ${RESOLUTION}  ]
 then
-	echo "Invalid resolution specification. It can only contain digits and an x letter separating the two dimensions." >&2
-	exit 2
+	echo "NOTE: using -R to reduce resolution is preferred over -r." >&2
+	_RESOLUTION=`echo ${RESOLUTION} | grep -oE '^-s [[:digit:]]+x[[:digit:]]+$'`
+	if [ -z ${_RESOLUTION} ]
+	then
+		echo "Invalid resolution specification. It can only contain digits and an x letter separating the two dimensions." >&2
+		exit 2
+	fi
 fi
 
 _SECPERIMG=`echo ${SECPERIMG} | grep -oE '^[[:digit:]]+$'`
@@ -93,6 +98,16 @@ then
         exit 2
 fi
 
+if [ ! -z ${REDUCE} ]
+then
+	_REDUCE=`echo ${REDUCE} | grep -oE '^-reduce [[:digit:]]+$'`
+	if [ -z ${_REDUCE} ]
+	then
+		echo "Invalid reduce scale specification. It can only contain digits." >&2
+		exit 2
+	fi
+fi
+
 # Create temp directory if does not exist
 mkdir -p ${TMPDIR}
 
@@ -106,10 +121,10 @@ do
 		tmpfile=`mktemp --tmpdir=${TMPDIR} -d`
 
 		# Extract JPEG 2000 image
-		env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp
+		env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp ${REDUCE}
 
 		# Stream to stdout
-		ffmpeg -loop_input -i ${tmpfile}.bmp -t ${SECPERIMG} -r ${FPS} -s ${RESOLUTION} -vcodec libtheora -f ogg -
+		ffmpeg -loop_input -i ${tmpfile}.bmp -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg -
 
 		# Clean up temporary file
 		rm -f ${tmpfile}.bmp
