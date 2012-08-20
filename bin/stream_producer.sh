@@ -11,15 +11,18 @@ FPS=4
 
 usage()
 {
-	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-f fps] [-R reducefactor] [-t tmpdir]"
+	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir]"
 	echo "$0 -h"
 }
 
-while getopts ":d:f:hK:n:r:R:t:" opt; do
+while getopts ":c:d:f:hK:n:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
 		exit 0
+		;;
+	c)
+		CROP="-region ${OPTARG}"
 		;;
         d)
                 SRCDIR=${OPTARG}
@@ -108,6 +111,17 @@ then
 	fi
 fi
 
+if [ ! -z ${CROP} ]
+then
+	_CROP=`echo ${CROP} |  grep -oE '^-region \{[01].[[:digit:]]+,[01].[[:digit:]]+\},\{[01].[[:digit:]]+,[01].[[:digit:]]+\}'`
+	if [ -z ${_CROP} ]
+	then
+		echo "Invalid region specification. It must be in the form {top,left},{height,width}." >&2
+		echo "All four values are real numbers between 0 and 1 and top-left corner is {0.0,0.0}." >&2
+		exit 2
+	fi
+fi
+
 # Create temp directory if does not exist
 mkdir -p ${TMPDIR}
 
@@ -121,7 +135,7 @@ do
 		tmpfile=`mktemp --tmpdir=${TMPDIR} -d`
 
 		# Extract JPEG 2000 image
-		env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp ${REDUCE}
+		env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp ${REDUCE} ${CROP}
 
 		# Stream to stdout
 		ffmpeg -loop_input -i ${tmpfile}.bmp -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg -
