@@ -27,6 +27,6 @@
 <!ELEMENT width (#PCDATA)>
 
 <!ATTLIST entry	xml:id ID #IMPLIED
-		mode (loop-dir|realtime) "loop-dir">
+		mode (loop-dir|realtime) #REQUIRED>
 
 <!ATTLIST channel href IDREF #REQUIRED>
