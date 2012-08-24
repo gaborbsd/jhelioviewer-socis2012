@@ -8,14 +8,29 @@ SRCDIR=img
 TMPDIR=./tmp
 SECPERIMG=3
 FPS=4
+MODE=loop-dir
 
 usage()
 {
-	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir]"
+	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-m mode]"
 	echo "$0 -h"
 }
 
-while getopts ":c:d:f:hK:n:r:R:t:" opt; do
+stream_file()
+{
+	tmpfile=`mktemp --tmpdir=${TMPDIR} -d`
+
+	# Extract JPEG 2000 image
+	env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp ${REDUCE} ${CROP}
+
+	# Stream to stdout
+	ffmpeg -loop_input -i ${tmpfile}.bmp -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg -
+
+	# Clean up temporary file
+	rm -f ${tmpfile}.bmp
+}
+
+while getopts ":c:d:f:hK:m:n:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -33,6 +48,9 @@ while getopts ":c:d:f:hK:n:r:R:t:" opt; do
         K)
                 KAKADUPATH=${OPTARG}
                 ;;
+	m)
+		MODE=${OPTARG}
+		;;
         n)
                 SECPERIMG=${OPTARG}
                 ;;
@@ -122,25 +140,34 @@ then
 	fi
 fi
 
+if [ ! ${MODE} = "loop-dir" ] && [ ! ${MODE} = "realtime" ]
+then
+	echo "Invalid mode. It must be either loop-dir or realtime." >&2
+	exit 2
+fi
+
 # Create temp directory if does not exist
 mkdir -p ${TMPDIR}
 
 #
 # Main loop to iterate over the images in the source directory
 #
+if [ ${MODE} = "loop-dir" ]
+then
 while :
 do
 	for f in `find ${SRCDIR} -type f -regex '.*\.jp2$' | sort`
 	do
-		tmpfile=`mktemp --tmpdir=${TMPDIR} -d`
-
-		# Extract JPEG 2000 image
-		env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp ${REDUCE} ${CROP}
-
-		# Stream to stdout
-		ffmpeg -loop_input -i ${tmpfile}.bmp -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg -
-
-		# Clean up temporary file
-		rm -f ${tmpfile}.bmp
+		stream_file
 	done
 done
+elif [ ${MODE} = "realtime" ]
+then
+	while :
+	do
+		datestr=`date +"%Y/%m/%d"`
+		f=`ls ${SRCDIR}/${datestr}/*.jp2 | sort | tail -n 1`
+
+		stream_file
+	done
+fi

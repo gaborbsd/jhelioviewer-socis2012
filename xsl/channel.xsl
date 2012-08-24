@@ -59,9 +59,22 @@
 	  and browse the images on your computer.
 	</video>
 
+	<xsl:if test="subchannels">
+	  <aside>
+	    <p class="hasJs">This channel has subchannels. To jump to a subchannel,
+	      clock on an arbitrary point on the video area and you will get another
+	      channel with a closer look on the selected area.</p>
+
+	    <p class="noJs">This channel has subchannels but it seems that you
+	      have disled JavaScript in your browser.  To use the subchannels
+	      feature, enable JavaScript in your browser and reload the page.</p>
+	  </aside>
+	</xsl:if>
+
 	<aside>
 	<xsl:call-template name="html.launch.app"/>
 	</aside>
+
 	</article>
       </body>
     </html>
