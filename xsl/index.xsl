@@ -4,9 +4,10 @@
 
   <xsl:import href="includes.xsl"/>
 
-  <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+  <xsl:output method="xml" encoding="utf-8" indent="yes" omit-xml-declaration="yes"/>
 
   <xsl:template match="/" name="generate.index">
+    <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html></xsl:text>
     <html lang="en">
       <head>
         <title>JHelioviewer Channels Index</title>

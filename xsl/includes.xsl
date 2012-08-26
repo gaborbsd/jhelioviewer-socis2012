@@ -15,6 +15,7 @@
         
     <link rel="shortcut icon" href="http://helioviewer.org/favicon.ico" />
     <link rel="stylesheet" href="http://helioviewer.org/build/css/helioviewer.min.css"/>
+    <link rel="stylesheet" href="channel.css"/>
   </xsl:template>
 
   <xsl:template name="html.launch.app">
