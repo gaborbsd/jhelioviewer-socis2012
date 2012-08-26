@@ -37,18 +37,15 @@ function changeMousePointer(event) {
 }
 
 function restyleClasses() {
-	var hasJs = document.getElementsByClassName("hasJs");
-
-	for (var e in hasJs) {
-		hasJs[e].style.visibility = "visible";
-		hasJs[e].style.display = "block";
-	}
-
 	var noJs = document.getElementsByClassName("noJs");
 
-	for (var e in noJs) {
-        	noJs[e].style.visibility = "hidden";
-		noJs[e].style.display = "none";
+	for (var idx = 0; idx < noJs.length; idx++)
+		noJs[idx].style.display = "none";
+
+	var hasJs = document.getElementsByClassName("hasJs");
+
+	for (var idx = 0; idx < hasJs.length; idx++) {
+		hasJs[idx].style.display = "block";
 	}
 }
 
