@@ -54,7 +54,7 @@
     <desc>Top-left view of the Sun in 512x512 resolution from 2012 May 26</desc>
     <source>AIA/1600/2012/05/26</source>
     <fps>4</fps>
-    <resolution>512</resolution>
+    <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
     <region>
       <top>0.0</top>
@@ -70,7 +70,7 @@
     <desc>Top-right view of the Sun in 512x512 resolution from 2012 May 26</desc>
     <source>AIA/1600/2012/05/26</source>
     <fps>4</fps>
-    <resolution>512</resolution>
+    <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
     <region>
       <top>0.0</top>
@@ -86,7 +86,7 @@
     <desc>Bottom-left view of the Sun in 512x512 resolution from 2012 May 26</desc>
     <source>AIA/1600/2012/05/26</source>
     <fps>4</fps>
-    <resolution>512</resolution>
+    <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
     <region>
       <top>0.5</top>
@@ -102,7 +102,7 @@
     <desc>Bottom-right view of the Sun in 512x512 resolution from 2012 May 26</desc>
     <source>AIA/1600/2012/05/26</source>
     <fps>4</fps>
-    <resolution>512</resolution>
+    <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
     <region>
       <top>0.5</top>
