@@ -20,7 +20,7 @@
       <xsl:otherwise>
 	<xsl:call-template name="entries">
 	  <xsl:with-param name="nodeSet" select="$nodeSet[position() != 1]"/>
-	  <xsl:with-param name="processed" select="concat($processed, ' ', $nodeSet[1]/mount-point)"/>
+	  <xsl:with-param name="processed" select="concat($processed, ' ', $nodeSet[1]/@xml:id)"/>
 	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -46,7 +46,7 @@ then
   done
 elif [ $# -eq 2 ]
 then
-  $2 $1
+  $1 $2 all
 fi
   </xsl:template>
 
@@ -78,22 +78,23 @@ fi
       </xsl:if>
     </xsl:variable>
 
-<xsl:value-of select="mount-point"/> () {
-if [ $1 = "check"]
+<xsl:value-of select="@xml:id"/> () {
+if [ "$1" == "check" ]
 then
-  if [ $2 = "producer" ]
+  if [ "$2" == "producer" ]
   then
-    ps -p `cat <xsl:value-of select="mount-point"/>.producer.pid` || <xsl:value-of select="mount-point"/> start producer
-  elif [ $2 = "consumer" ]
+    ps -p `cat <xsl:value-of select="@xml:id"/>.producer.pid` || <xsl:value-of select="@xml:id"/> start producer
+  elif [ "$2" == "consumer" ]
   then
-    ps -p `cat <xsl:value-of select="mount-point"/>.consumer.pid` || <xsl:value-of select="mount-point"/> start consumer
-  elif [ $2 = "all" ]
+    ps -p `cat <xsl:value-of select="@xml:id"/>.consumer.pid` || <xsl:value-of select="@xml:id"/> start consumer
+  elif [ "$2" == "all" ]
   then
-    <xsl:value-of select="mount-point"/> check producer
-    <xsl:value-of select="mount-point"/> check consumer
+    <xsl:value-of select="@xml:id"/> check producer
+    <xsl:value-of select="@xml:id"/> check consumer
   else
-    echo "Wrong check argument." &gt; &amp;2
-elif [ $1 = "start"]
+    echo "Wrong check argument." &gt;&amp;2
+  fi
+elif [ "$1" == "start" ]
 then
   if [ ! -p <xsl:value-of select="mount-point"/> ]
   then
@@ -101,41 +102,42 @@ then
     mkfifo <xsl:value-of select="mount-point"/>
   fi
 
-  if [ $2 = "producer"]
+  if [ "$2" == "producer" ]
   then
     nohup ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="//img-base"/>/<xsl:value-of select="source"/> \
       -f <xsl:value-of select="fps"/> <xsl:value-of select="$reduce"/> <xsl:value-of select="$region"/> \
       -n <xsl:value-of select="sec-per-img"/> -m <xsl:value-of select="@mode"/> \
       &gt;&gt; <xsl:value-of select="mount-point"/> &amp;
-    echo $$ &gt;&gt; <xsl:value-of select="mount-point"/>.producer.pid
-  elif [ $2 = "consumer"]
+    echo $$ &gt;&gt; <xsl:value-of select="@xml:id"/>.producer.pid
+  elif [ "$2" == "consumer" ]
   then
     nohup ./<xsl:value-of select="$consumer"/> -H localhost -p <xsl:value-of select="//stream-port"/> \
       -l <xsl:value-of select="//stream-pass"/> -m <xsl:value-of select="mount-point"/> \
       -s <xsl:value-of select="mount-point"/> -n "<xsl:value-of select="name"/>" \
       -d "<xsl:value-of select="desc"/>" &amp;
-    echo $$ &gt;&gt; <xsl:value-of select="mount-point"/>.consumer.pid
-  elif [ $2 = "all" ]
+    echo $$ &gt;&gt; <xsl:value-of select="@xml:id"/>.consumer.pid
+  elif [ "$2" == "all" ]
   then
-    <xsl:value-of select="mount-point"/> start producer
-    <xsl:value-of select="mount-point"/> start consumer
+    <xsl:value-of select="@xml:id"/> start producer
+    <xsl:value-of select="@xml:id"/> start consumer
   else
-    echo "Wrong start argument." &gt;&gt; &amp;
-elif [ $1 = "stop"]
+    echo "Wrong start argument." &gt;&amp;2
+  fi
+elif [ "$1" == "stop" ]
 then
-  if [ $2 = "producer"]
+  if [ "$2" == "producer" ]
   then
-    kill -KILL `cat <xsl:value-of select="mount-point"/>.producer.pid`
-    rm -rf <xsl:value-of select="mount-point"/>.producer.pid
-  elif [ $2 = "consumer"]
+    kill -KILL `cat <xsl:value-of select="@xml:id"/>.producer.pid`
+    rm -rf <xsl:value-of select="@xml:id"/>.producer.pid
+  elif [ "$2" == "consumer" ]
   then
-    kill -KILL `cat <xsl:value-of select="mount-point"/>.consumer.pid`
-    rm -rf <xsl:value-of select="mount-point"/>.consumer.pid
-  elif [ $2 = "all"]
+    kill -KILL `cat <xsl:value-of select="@xml:id"/>.consumer.pid`
+    rm -rf <xsl:value-of select="@xml:id"/>.consumer.pid
+  elif [ "$2" == "all" ]
   then
-    <xsl:value-of select="mount-point"/> stop producer
-    <xsl:value-of select="mount-point"/> stop consumer
-    rm -rf <xsl:value-of select="mount-point"/>*
+    <xsl:value-of select="@xml:id"/> stop producer
+    <xsl:value-of select="@xml:id"/> stop consumer
+    rm -rf <xsl:value-of select="@xml:id"/>*
   fi
 fi
 }
