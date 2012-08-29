@@ -83,10 +83,10 @@ if [ "$1" == "check" ]
 then
   if [ "$2" == "producer" ]
   then
-    ps -p `cat <xsl:value-of select="@xml:id"/>.producer.pid` || <xsl:value-of select="@xml:id"/> start producer
+    ps aux | grep -F producer | grep -qF <xsl:value-of select="@xml:id"/> || <xsl:value-of select="@xml:id"/> start producer
   elif [ "$2" == "consumer" ]
   then
-    ps -p `cat <xsl:value-of select="@xml:id"/>.consumer.pid` || <xsl:value-of select="@xml:id"/> start consumer
+    ps aux | grep -F consumer | grep -qF <xsl:value-of select="@xml:id"/> || <xsl:value-of select="@xml:id"/> start consumer
   elif [ "$2" == "all" ]
   then
     <xsl:value-of select="@xml:id"/> check producer
@@ -104,18 +104,16 @@ then
 
   if [ "$2" == "producer" ]
   then
-    nohup ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="//img-base"/>/<xsl:value-of select="source"/> \
+    ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="//img-base"/>/<xsl:value-of select="source"/> \
       -f <xsl:value-of select="fps"/> <xsl:value-of select="$reduce"/> <xsl:value-of select="$region"/> \
       -n <xsl:value-of select="sec-per-img"/> -m <xsl:value-of select="@mode"/> \
-      &gt;&gt; <xsl:value-of select="mount-point"/> &amp;
-    echo $$ &gt;&gt; <xsl:value-of select="@xml:id"/>.producer.pid
+      -p <xsl:value-of select="mount-point"/> &gt;&gt; <xsl:value-of select="mount-point"/> 2&gt;/dev/null &amp;
   elif [ "$2" == "consumer" ]
   then
-    nohup ./<xsl:value-of select="$consumer"/> -H localhost -p <xsl:value-of select="//stream-port"/> \
+    ./<xsl:value-of select="$consumer"/> -H localhost -p <xsl:value-of select="//stream-port"/> \
       -l <xsl:value-of select="//stream-pass"/> -m <xsl:value-of select="mount-point"/> \
       -s <xsl:value-of select="mount-point"/> -n "<xsl:value-of select="name"/>" \
       -d "<xsl:value-of select="desc"/>" &amp;
-    echo $$ &gt;&gt; <xsl:value-of select="@xml:id"/>.consumer.pid
   elif [ "$2" == "all" ]
   then
     <xsl:value-of select="@xml:id"/> start producer
@@ -127,12 +125,18 @@ elif [ "$1" == "stop" ]
 then
   if [ "$2" == "producer" ]
   then
-    kill -KILL `cat <xsl:value-of select="@xml:id"/>.producer.pid`
-    rm -rf <xsl:value-of select="@xml:id"/>.producer.pid
+    pid=`ps aux | grep -F producer | grep -F <xsl:value-of select="@xml:id"/> | awk '{print $2}'`
+    if [ "${pid}" != "" ]
+    then
+      kill -KILL ${pid}
+    fi
   elif [ "$2" == "consumer" ]
   then
-    kill -KILL `cat <xsl:value-of select="@xml:id"/>.consumer.pid`
-    rm -rf <xsl:value-of select="@xml:id"/>.consumer.pid
+    pid=`ps aux | grep -F consumer | grep -F <xsl:value-of select="@xml:id"/> | awk '{print $2}'`
+    if [ "${pid}" != "" ]
+    then
+      kill -KILL ${pid}
+    fi
   elif [ "$2" == "all" ]
   then
     <xsl:value-of select="@xml:id"/> stop producer

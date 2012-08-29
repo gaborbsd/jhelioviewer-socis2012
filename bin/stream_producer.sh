@@ -12,7 +12,7 @@ MODE=loop-dir
 
 usage()
 {
-	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-m mode]"
+	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-m mode] [-p pipe]"
 	echo "$0 -h"
 }
 
@@ -30,7 +30,7 @@ stream_file()
 	rm -f ${tmpfile}.bmp
 }
 
-while getopts ":c:d:f:hK:m:n:r:R:t:" opt; do
+while getopts ":c:d:f:hK:m:n:p:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -54,6 +54,9 @@ while getopts ":c:d:f:hK:m:n:r:R:t:" opt; do
         n)
                 SECPERIMG=${OPTARG}
                 ;;
+	p)
+		PIPE=${OPTARG}
+		;;
         r)
                 RESOLUTION="-s ${OPTARG}"
                 ;;
@@ -140,9 +143,15 @@ then
 	fi
 fi
 
-if [ ! ${MODE} = "loop-dir" ] && [ ! ${MODE} = "realtime" ]
+if [ ! ${MODE} = "loop-dir" ] && [ ! ${MODE} = "realtime" ] && [ ! ${MODE} = "cyclic-day" ]
 then
 	echo "Invalid mode. It must be either loop-dir or realtime." >&2
+	exit 2
+fi
+
+if [ ! -p "${PIPE}" ]
+then
+	echo "Named pipe does not exist." >&2
 	exit 2
 fi
 
@@ -166,8 +175,18 @@ then
 	while :
 	do
 		datestr=`date +"%Y/%m/%d"`
-		f=`ls ${SRCDIR}/${datestr}/*.jp2 | sort | tail -n 1`
+		f=`find ${SRCDIR}/${datestr} -type f -regex '.*\.jp2$' | sort | tail -n 1`
 
 		stream_file
+	done
+elif [ ${MODE} = "cyclic-day" ]
+then
+	while :
+	do
+		datestr=`date +"%Y/%m/%d"`
+		for f in `find ${SRCDIR}/${datestr} -type f -regex '.*\.jp2$' | sort`
+		do
+			stream_file
+		done
 	done
 fi
