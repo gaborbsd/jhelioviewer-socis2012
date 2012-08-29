@@ -2,7 +2,7 @@
 
 <!ELEMENT global (stream-server, stream-port, stream-pass, stream-type, jnlp-path, img-base)>
 
-<!ELEMENT entry (mount-point, name, desc, source, fps, resolution, sec-per-img, region?, subchannels?)>
+<!ELEMENT entry (mount-point, name, desc, source, fps, resolution, sec-per-img, dateformat, region?, subchannels?)>
 
 <!ELEMENT stream-server (#PCDATA)>
 <!ELEMENT stream-port (#PCDATA)>
@@ -18,6 +18,7 @@
 <!ELEMENT fps (#PCDATA)>
 <!ELEMENT resolution (#PCDATA)>
 <!ELEMENT sec-per-img (#PCDATA)>
+<!ELEMENT dateformat (#PCDATA)>
 <!ELEMENT subchannels (channel+)>
 <!ELEMENT channel EMPTY>
 <!ELEMENT region (top, left, height, width)>
@@ -27,6 +28,6 @@
 <!ELEMENT width (#PCDATA)>
 
 <!ATTLIST entry	xml:id ID #IMPLIED
-		mode (loop-dir|realtime) #REQUIRED>
+		mode (loop-dir|realtime|cyclic-day) #REQUIRED>
 
 <!ATTLIST channel href IDREF #REQUIRED>

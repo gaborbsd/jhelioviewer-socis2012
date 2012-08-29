@@ -40,6 +40,7 @@
     <fps>4</fps>
     <resolution>512</resolution>
     <sec-per-img>3</sec-per-img>
+    <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
     <subchannels>
       <channel href="topleft512"/>
       <channel href="topright512"/>
@@ -56,6 +57,7 @@
     <fps>4</fps>
     <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
+    <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
     <region>
       <top>0.0</top>
       <left>0.0</left>
@@ -72,6 +74,7 @@
     <fps>4</fps>
     <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
+    <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
     <region>
       <top>0.0</top>
       <left>0.5</left>
@@ -104,6 +107,7 @@
     <fps>4</fps>
     <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
+    <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
     <region>
       <top>0.5</top>
       <left>0.5</left>
