@@ -78,6 +78,14 @@ fi
       </xsl:if>
     </xsl:variable>
 
+    <xsl:variable name="dateFormat">
+      <xsl:if test="dateformat">
+        <xsl:text> -D "</xsl:text>
+        <xsl:value-of select="./dateformat"/>
+        <xsl:text>"</xsl:text>
+      </xsl:if>
+    </xsl:variable>
+
 <xsl:value-of select="@xml:id"/> () {
 if [ "$1" == "check" ]
 then
@@ -107,7 +115,8 @@ then
     ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="//img-base"/>/<xsl:value-of select="source"/> \
       -f <xsl:value-of select="fps"/> <xsl:value-of select="$reduce"/> <xsl:value-of select="$region"/> \
       -n <xsl:value-of select="sec-per-img"/> -m <xsl:value-of select="@mode"/> \
-      -p <xsl:value-of select="mount-point"/> &gt;&gt; <xsl:value-of select="mount-point"/> 2&gt;/dev/null &amp;
+      -p <xsl:value-of select="mount-point"/> <xsl:value-of select="$dateFormat"/> \
+      &gt;&gt; <xsl:value-of select="mount-point"/> 2&gt;/dev/null &amp;
   elif [ "$2" == "consumer" ]
   then
     ./<xsl:value-of select="$consumer"/> -H localhost -p <xsl:value-of select="//stream-port"/> \

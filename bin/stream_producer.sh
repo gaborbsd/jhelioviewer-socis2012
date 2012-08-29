@@ -12,7 +12,7 @@ MODE=loop-dir
 
 usage()
 {
-	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-m mode] [-p pipe]"
+	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-m mode] [-p pipe] [-D dateformat]"
 	echo "$0 -h"
 }
 
@@ -20,17 +20,36 @@ stream_file()
 {
 	tmpfile=`mktemp --tmpdir=${TMPDIR} -d`
 
+	if [ ! -z "${DATEFORMAT}" ]
+	then
+		lastmod=`stat -c "%y" ${f}`
+		date_formatted=`date --date="${lastmod}" "+%Y-%m-%d %H:%M:%S"`
+	fi
+
 	# Extract JPEG 2000 image
 	env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp ${REDUCE} ${CROP}
 
+	if [ ! -z "${DATEFORMAT}" ]
+	then
+		convert -size 110x14 xc:none -gravity center \
+			-stroke black -strokewidth 2 \
+			-annotate 0 "${date_formatted}" \
+			-background none -shadow 110x3+0+0 +repage \
+			-stroke none -fill white \
+			-annotate 0 "${date_formatted}" \
+			${tmpfile}.bmp  +swap -gravity south -geometry +0-3 \
+			-composite  ${tmpfile}.new.bmp
+	fi
+
 	# Stream to stdout
-	ffmpeg -loop_input -i ${tmpfile}.bmp -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg -
+	ffmpeg -loop_input -i ${tmpfile}.new.bmp -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg -
 
 	# Clean up temporary file
+	rm -f ${tmpfile}.new.bmp
 	rm -f ${tmpfile}.bmp
 }
 
-while getopts ":c:d:f:hK:m:n:p:r:R:t:" opt; do
+while getopts ":c:d:D:f:hK:m:n:p:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -42,6 +61,9 @@ while getopts ":c:d:f:hK:m:n:p:r:R:t:" opt; do
         d)
                 SRCDIR=${OPTARG}
                 ;;
+	D)
+		DATEFORMAT="${OPTARG}"
+		;;
 	f)
 		FPS=${OPTARG}
 		;;
