@@ -18,7 +18,7 @@ usage()
 
 stream_file()
 {
-	tmpfile=`mktemp --tmpdir=${TMPDIR} -d`
+	tmpfile=`mktemp --tmpdir=${TMPDIR} -u`
 
 	if [ ! -z "${DATEFORMAT}" ]
 	then
@@ -39,13 +39,13 @@ stream_file()
 			-annotate 0 "${date_formatted}" \
 			${tmpfile}.bmp  +swap -gravity south -geometry +0-3 \
 			-composite  ${tmpfile}.new.bmp
+		mv ${tmpfile}.new.bmp ${tmpfile}.bmp
 	fi
 
 	# Stream to stdout
-	ffmpeg -loop_input -i ${tmpfile}.new.bmp -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg -
+	ffmpeg -loop_input -i ${tmpfile}.bmp -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg -
 
 	# Clean up temporary file
-	rm -f ${tmpfile}.new.bmp
 	rm -f ${tmpfile}.bmp
 }
 
