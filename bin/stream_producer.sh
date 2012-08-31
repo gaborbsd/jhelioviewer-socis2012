@@ -1,6 +1,29 @@
 #!/bin/sh
 
 #
+# This script creates a video stream from images and outputs the
+# stream to stdout. The script has three different modes:
+#
+# (1) loop-dir: Loops the specified directory and repeats the
+#     contained images all the time.
+#
+# (2) realtime: In this case, only the sensor directory should
+#     be specified and the script finds the images for the
+#     current date and always emits the last image.
+#
+# (3) cyclic-day: In this case, only the sensor directory should
+#     be specified and the script finds the images for the
+#     current day and iterates through the images of the current
+#     day, including the recently arrived new images in each
+#     iteration.
+#
+# The script can be configured with various parameters that
+# control the characteristics off the created stream and also
+# allow some other features, like cropping the image to a specific
+# region of interest or adding a timestamp.
+#
+
+#
 # Default values for variables
 #
 KAKADUPATH=./bin
@@ -10,16 +33,23 @@ SECPERIMG=3
 FPS=4
 MODE=loop-dir
 
+#
+# Prints usage info
+#
 usage()
 {
 	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-m mode] [-p pipe] [-D dateformat]"
 	echo "$0 -h"
 }
 
+#
+# Sends the image stored in ${f} to the stream.
+#
 stream_file()
 {
 	tmpfile=`mktemp --tmpdir=${TMPDIR} -u`
 
+	# Format the date if DATEFORMAT is set.
 	if [ ! -z "${DATEFORMAT}" ]
 	then
 		lastmod=`stat -c "%y" ${f}`
@@ -29,6 +59,7 @@ stream_file()
 	# Extract JPEG 2000 image
 	env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp ${REDUCE} ${CROP}
 
+	# Only add date if DATEFORMAT is set
 	if [ ! -z "${DATEFORMAT}" ]
 	then
 		convert -size 110x14 xc:none -gravity center \
@@ -49,6 +80,7 @@ stream_file()
 	rm -f ${tmpfile}.bmp
 }
 
+# Parse command-line arguments
 while getopts ":c:d:D:f:hK:m:n:p:r:R:t:" opt; do
         case ${opt} in
 	h)
@@ -105,18 +137,21 @@ done
 # Some sanity check on the parameters follow
 #
 
+# The source directory must exist.
 if [ ! -d ${SRCDIR} ]
 then
 	echo "Invalid source directory specified." >&2
 	exit 2
 fi
 
+# The path to Kakadu must exist and must contain kdu_expand
 if [ ! -d ${KAKADUPATH} ] || [ ! -x ${KAKADUPATH}/kdu_expand ]
 then
 	echo "Invalid Kakadu directory specified." >&2
 	exit 2
 fi
 
+# Emit warning if resolution is set with ffmpeg instead of kdu_expand
 if [ ! -z ${RESOLUTION}  ]
 then
 	echo "NOTE: using -R to reduce resolution is preferred over -r." >&2
@@ -128,6 +163,7 @@ then
 	fi
 fi
 
+# Seconds value contains one or more digit
 _SECPERIMG=`echo ${SECPERIMG} | grep -oE '^[[:digit:]]+$'`
 
 if [ -z ${_SECPERIMG} ]
@@ -136,6 +172,7 @@ then
 	exit 2
 fi
 
+# FPS value contains one or more digit
 _FPS=`echo ${FPS} | grep -oE '^[[:digit:]]+$'`
 
 if [ -z ${_FPS} ]
@@ -144,6 +181,7 @@ then
         exit 2
 fi
 
+# Reduce value contains one or more digit
 if [ ! -z ${REDUCE} ]
 then
 	_REDUCE=`echo ${REDUCE} | grep -oE '^-reduce [[:digit:]]+$'`
@@ -154,6 +192,8 @@ then
 	fi
 fi
 
+# Crop value contains two pairs of real numbers, both pairs enclosed into
+# {} brackets and separated by comma.
 if [ ! -z ${CROP} ]
 then
 	_CROP=`echo ${CROP} |  grep -oE '^-region \{[01].[[:digit:]]+,[01].[[:digit:]]+\},\{[01].[[:digit:]]+,[01].[[:digit:]]+\}'`
@@ -165,12 +205,14 @@ then
 	fi
 fi
 
+# Mode can only take these specific values
 if [ ! ${MODE} = "loop-dir" ] && [ ! ${MODE} = "realtime" ] && [ ! ${MODE} = "cyclic-day" ]
 then
 	echo "Invalid mode. It must be either loop-dir or realtime." >&2
 	exit 2
 fi
 
+# Named pipe must exist
 if [ ! -p "${PIPE}" ]
 then
 	echo "Named pipe does not exist." >&2
@@ -183,6 +225,8 @@ mkdir -p ${TMPDIR}
 #
 # Main loop to iterate over the images in the source directory
 #
+
+# loop-dir only iterates on the directory inside an infinite loop
 if [ ${MODE} = "loop-dir" ]
 then
 while :
@@ -192,6 +236,8 @@ do
 		stream_file
 	done
 done
+
+# realtime always takes the last image in current day's directory
 elif [ ${MODE} = "realtime" ]
 then
 	while :
@@ -201,6 +247,9 @@ then
 
 		stream_file
 	done
+
+# cyclic-day always iterates on the current day's directory and subsequent calls
+# of find will always take more and more images.
 elif [ ${MODE} = "cyclic-day" ]
 then
 	while :

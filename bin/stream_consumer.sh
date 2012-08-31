@@ -1,9 +1,19 @@
 #!/bin/sh
 
+#
+# This script reads the specified named pipe and send the read data
+# to an Icecast streaming server. The script needs the authentication
+# settings to be properly configured through the command line
+# parameters. Optionally, the channem name and description can also
+# be specified.
+#
+
+#
+# Default variable values
+#
 PIPE=stream.ogg
 STREAMHOST=localhost
 STREAMPORT=4551
-STREAMPASS=changeme
 MOUNTPOINT=helio.ogg
 NAME="Unnamed Video Stream"
 DESC="JHelioviewer Video Channel"
@@ -58,12 +68,14 @@ done
 # Some sanity check on the parameters follow
 #
 
+# Named pipe must exist
 if [ ! -p ${PIPE} ]
 then
 	echo "Specified named pipe ${PIPE} does not exist." >&2
 	exit 2
 fi
 
+# The stream port contains one or more digits
 _STREAMPORT=`echo ${STREAMPORT} | grep -oE '^[[:digit:]]+$'`
 
 if [ -z ${_STREAMPORT} ]

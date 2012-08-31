@@ -1,3 +1,10 @@
+/*
+ * Handles onclick() on the video area and reads the
+ * subchannel references in the data-subchannel# attribute,
+ * where # is the subchannel number. Determines which subchannel
+ * the click belongs to and redirects the user to the
+ * corresponding subchannel.
+ */
 function redirectToSubChannel(event) {
 	event = event || window.event;
 
@@ -30,12 +37,22 @@ function redirectToSubChannel(event) {
 	window.location = chanLink;
 }
 
+/*
+ * Change to mouse pointer to a cross when over the
+ * video area to indicate that the user can click there.
+ */
 function changeMousePointer(event) {
 	var video = document.getElementById("videoarea");
 
 	video.style.cursor = "crosshair";
 }
 
+/*
+ * Handles onload() for the window. Hides parts that
+ * are only meant for people, who do not have JavaScript
+ * enabled and shows parts that are only applicable if
+ * JavaScript is enabled.
+ */
 function restyleClasses() {
 	var noJs = document.getElementsByClassName("noJs");
 
