@@ -11,7 +11,7 @@
   <xsl:template match="/" name="generate.channel.pages">
     <xsl:for-each select="//entry">
       <xsl:variable name="fname">
-	<xsl:value-of select="concat(./mount-point, '.html')"/>
+	<xsl:value-of select="concat(./@xml:id, '.html')"/>
       </xsl:variable>
 
       <exsl:document href="{$fname}" method="xml" encoding="utf-8" indent="yes" omit-xml-declaration="yes">
@@ -38,7 +38,7 @@
 	    <xsl:variable name="idRef" select="@href"/>
 
 	    <xsl:attribute name="data-subchannel-{position()}">
-	      <xsl:value-of select="concat(//entry[@xml:id = $idRef]/mount-point, '.html')"/>
+	      <xsl:value-of select="concat(//entry[@xml:id = $idRef]/@xml:id, '.html')"/>
 	    </xsl:attribute>
 
 	    <xsl:attribute name="onclick">redirectToSubChannel(event);</xsl:attribute>
@@ -80,7 +80,7 @@
 		  <xsl:variable name="referred" select="//entry[@xml:id = $idRef]"/>
 
 		  <dt>
-		    <a href="{concat($referred/mount-point, '.html')}">
+		    <a href="{concat($referred/@xml:id, '.html')}">
 		      <xsl:value-of select="$referred/name"/>
 		    </a>
 		  </dt>

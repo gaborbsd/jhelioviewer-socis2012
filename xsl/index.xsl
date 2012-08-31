@@ -26,7 +26,7 @@
 	<dl>
 	  <xsl:for-each select="//entry">
 	    <xsl:variable name="fname">
-	      <xsl:value-of select="concat(./mount-point, '.html')"/>
+	      <xsl:value-of select="concat(./@xml:id, '.html')"/>
 	    </xsl:variable>
 
 	    <dt><a href="{$fname}"><xsl:value-of select="name"/></a></dt>
