@@ -6,9 +6,7 @@
     <stream-port>4551</stream-port>
     <stream-pass>changeme</stream-pass>
     <stream-type>video/ogg</stream-type>
-
-    <jnlp-path>jhelioviewer.jnlp</jnlp-path>
-
+    <urlbase>http://kovesdan.org/jhv</urlbase>
     <img-base>/home/gabor/img/delphi.nascom.nasa.gov/jp2</img-base>
   </global>
 
@@ -40,6 +38,7 @@
     <fps>4</fps>
     <resolution>512</resolution>
     <sec-per-img>3</sec-per-img>
+    <palette>SDO_AIA_1600.png</palette>
     <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
     <subchannels>
       <channel href="topleft512"/>

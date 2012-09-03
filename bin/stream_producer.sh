@@ -38,7 +38,7 @@ MODE=loop-dir
 #
 usage()
 {
-	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-m mode] [-p pipe] [-D dateformat]"
+	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-m mode] [-p pipe] [-P palette] [-D dateformat]"
 	echo "$0 -h"
 }
 
@@ -58,6 +58,13 @@ stream_file()
 
 	# Extract JPEG 2000 image
 	env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp ${REDUCE} ${CROP}
+	convert ${tmpfile}.bmp ${tmpfile}.png
+
+	# Add palette
+	if [ ! -z "${PALETTE}" ]
+	then
+		php add_palette.php ${tmpfile}.png ${PALETTE}
+	fi
 
 	# Only add date if DATEFORMAT is set
 	if [ ! -z "${DATEFORMAT}" ]
@@ -68,20 +75,20 @@ stream_file()
 			-background none -shadow 110x3+0+0 +repage \
 			-stroke none -fill white \
 			-annotate 0 "${date_formatted}" \
-			${tmpfile}.bmp  +swap -gravity south -geometry +0-3 \
-			-composite  ${tmpfile}.new.bmp
-		mv ${tmpfile}.new.bmp ${tmpfile}.bmp
+			${tmpfile}.png  +swap -gravity south -geometry +0-3 \
+			-composite  ${tmpfile}.new.png
+		mv ${tmpfile}.new.png ${tmpfile}.png
 	fi
 
 	# Stream to stdout
-	ffmpeg -loop_input -i ${tmpfile}.bmp -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg -
+	ffmpeg -loop_input -i ${tmpfile}.png -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg -
 
 	# Clean up temporary file
-	rm -f ${tmpfile}.bmp
+	rm -f ${tmpfile}.png
 }
 
 # Parse command-line arguments
-while getopts ":c:d:D:f:hK:m:n:p:r:R:t:" opt; do
+while getopts ":c:d:D:f:hK:m:n:p:P:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -110,6 +117,8 @@ while getopts ":c:d:D:f:hK:m:n:p:r:R:t:" opt; do
                 ;;
 	p)
 		PIPE=${OPTARG}
+		;;
+	P)	PALETTE=${OPTARG}
 		;;
         r)
                 RESOLUTION="-s ${OPTARG}"
@@ -209,6 +218,13 @@ fi
 if [ ! ${MODE} = "loop-dir" ] && [ ! ${MODE} = "realtime" ] && [ ! ${MODE} = "cyclic-day" ]
 then
 	echo "Invalid mode. It must be either loop-dir or realtime." >&2
+	exit 2
+fi
+
+# Check if palette exists
+if [ ! -z "${PALETTE}" ] && [ ! -f "${PALETTE}" ]
+then
+	echo "Palette file does not exist." >&2
 	exit 2
 fi
 

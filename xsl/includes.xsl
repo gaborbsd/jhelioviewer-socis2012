@@ -21,6 +21,6 @@
   <xsl:template name="html.launch.app">
     <p>The JHelioviewer application has some more advanced features that allow
       you browsing and manipulating the images on your computer. To launch
-      the application, <a href="{//jnlp-path}">click here</a>.</p>
+      the application, <a href="jhelioviewer.jnlp">click here</a>.</p>
   </xsl:template>
 </xsl:stylesheet>

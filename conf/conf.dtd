@@ -1,14 +1,14 @@
 <!ELEMENT configuration (global, entry+)>
 
-<!ELEMENT global (stream-server, stream-port, stream-pass, stream-type, jnlp-path, img-base)>
+<!ELEMENT global (stream-server, stream-port, stream-pass, stream-type, urlbase, img-base)>
 
-<!ELEMENT entry (mount-point, name, desc, source, fps, resolution, sec-per-img, dateformat, region?, subchannels?)>
+<!ELEMENT entry (mount-point, name, desc, source, fps, resolution, sec-per-img, palette?, dateformat?, region?, subchannels?)>
 
 <!ELEMENT stream-server (#PCDATA)>
 <!ELEMENT stream-port (#PCDATA)>
 <!ELEMENT stream-pass (#PCDATA)>
 <!ELEMENT stream-type (#PCDATA)>
-<!ELEMENT jnlp-path (#PCDATA)>
+<!ELEMENT urlbase (#PCDATA)>
 <!ELEMENT img-base (#PCDATA)>
 
 <!ELEMENT mount-point (#PCDATA)>
@@ -18,6 +18,7 @@
 <!ELEMENT fps (#PCDATA)>
 <!ELEMENT resolution (#PCDATA)>
 <!ELEMENT sec-per-img (#PCDATA)>
+<!ELEMENT palette (#PCDATA)>
 <!ELEMENT dateformat (#PCDATA)>
 <!ELEMENT subchannels (channel+)>
 <!ELEMENT channel EMPTY>
