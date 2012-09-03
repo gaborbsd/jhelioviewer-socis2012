@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+	Generate a page for each channels.
+-->
+
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:exsl="http://exslt.org/common"
@@ -9,19 +14,27 @@
   <xsl:output method="xml" encoding="utf-8" indent="yes" omit-xml-declaration="yes"/>
 
   <xsl:template match="/" name="generate.channel.pages">
+    <!-- Iterating over entries -->
     <xsl:for-each select="//entry">
       <xsl:variable name="fname">
 	<xsl:value-of select="concat(./@xml:id, '.html')"/>
       </xsl:variable>
 
+      <!-- Create one page per entry -->
       <exsl:document href="{$fname}" method="xml" encoding="utf-8" indent="yes" omit-xml-declaration="yes">
 	<xsl:apply-templates select="." mode="channel.page"/>
       </exsl:document>
     </xsl:for-each>
   </xsl:template>
 
+  <!--
+	Template to create page for the matched entry.
+  -->
   <xsl:template match="entry" mode="channel.page">
+
+    <!-- HTML5 DOCTYPE -->
     <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html></xsl:text>
+
     <html lang="en">
       <head>
 	<title><xsl:value-of select="name"/></title>
@@ -37,6 +50,9 @@
 	  <xsl:for-each select="subchannels/channel">
 	    <xsl:variable name="idRef" select="@href"/>
 
+	    <!--
+		Refer to the subchannels with HTML5's data- attributes.
+	    -->
 	    <xsl:attribute name="data-subchannel-{position()}">
 	      <xsl:value-of select="concat(//entry[@xml:id = $idRef]/@xml:id, '.html')"/>
 	    </xsl:attribute>
@@ -65,6 +81,10 @@
 	  and browse the images on your computer.
 	</video>
 
+	<!--
+		Add some conditional explanations that depend on whether
+		JavaScript is available or not.
+	-->
 	<xsl:if test="subchannels">
 	  <aside>
 	    <p class="hasJs">This channel has subchannels. To jump to a subchannel,
@@ -92,6 +112,9 @@
 	  </aside>
 	</xsl:if>
 
+	<!--
+		Link to the JNLP file that launches JHelioviewer.
+	-->
 	<aside>
 	<xsl:call-template name="html.launch.app"/>
 	</aside>

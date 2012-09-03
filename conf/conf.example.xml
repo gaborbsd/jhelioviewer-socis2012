@@ -22,9 +22,6 @@
     <!-- Mime type of the streamed content -->
     <stream-type>video/ogg</stream-type>
 
-    <!-- Path of the JNLP file to launch the app -->
-    <jnlp-path>jhelioviewer.jnlp</jnlp-path>
-
     <!-- Path of the JPEG 2000 images -->
     <img-base>/home/gabor/img</img-base>
   </global>

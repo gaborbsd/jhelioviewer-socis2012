@@ -1,23 +1,25 @@
 <?php
 
-function setColorPalette($input, $table) {
-	$gd = imagecreatefrompng($input);
-        $ctable = imagecreatefrompng($table);
+/*
+ * Applies color palette to images.
+ *
+ * Usage: php add_palette.sh <pic.png> <palette.png>
+ */
 
-        // Apply color table
-        for ($i = 0; $i <= 255; $i++) {
-            $rgb = imagecolorat($ctable, 0, $i);
-            $r = ($rgb >> 16) & 0xFF;
-            $g = ($rgb >> 8) & 0xFF;
-            $b = $rgb & 0xFF;
-            imagecolorset($gd, $i, $r, $g, $b);
-        }
+$gd = imagecreatefrompng($argv[1]);
+$ctable = imagecreatefrompng($argv[2]);
 
-        imagepng($gd, $input);
-
-        imagedestroy($gd);
-        imagedestroy($ctable);
+// Read palette and apply color for each palette index
+for ($i = 0; $i <= 255; $i++) {
+	$rgb = imagecolorat($ctable, 0, $i);
+	$r = ($rgb >> 16) & 0xFF;
+	$g = ($rgb >> 8) & 0xFF;
+	$b = $rgb & 0xFF;
+	imagecolorset($gd, $i, $r, $g, $b);
 }
 
-setColorPalette($argv[1], $argv[2]);
+// Save and clean up
+imagepng($gd, $input);
+imagedestroy($gd);
+imagedestroy($ctable);
 ?>

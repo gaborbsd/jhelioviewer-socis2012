@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+	Generate startup script that controls channels.
+-->
+
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:math="http://exslt.org/math"
@@ -8,6 +13,9 @@
 
   <xsl:output method="text" encoding="utf-8"/>
 
+  <!--
+	Recursive template to get a list of entries.
+  -->
   <xsl:template name="entries">
     <xsl:param name="nodeSet"/>
     <xsl:param name="processed" select="''"/>
@@ -26,7 +34,11 @@
     </xsl:choose>
   </xsl:template>
 
+  <!--
+	Main template that generates the script.
+  -->
   <xsl:template match="/" name="generate.startup.script">
+    <!-- List of entries -->
     <xsl:variable name="entries">
       <xsl:call-template name="entries">
 	<xsl:with-param name="nodeSet" select="//entry"/>
@@ -36,8 +48,16 @@
     <xsl:text>#/bin/sh
 </xsl:text>
 
+    <!--
+	Iterate over all entries and generate a function to
+	start/stop/check each channel.
+    -->
     <xsl:apply-templates select="//entry" mode="startup.script"/>
 
+<!--
+	Main part of the script that calls channel-specific
+	functions.
+-->
 if [ $# -eq 1 ]
 then
   for ch in <xsl:value-of select="$entries"/>
@@ -50,6 +70,9 @@ then
 fi
   </xsl:template>
 
+  <!--
+	Template to calculate a control function for each channel.
+  -->
   <xsl:template match="entry" mode="startup.script">
 
     <!--
@@ -64,6 +87,11 @@ fi
       <xsl:value-of select="round(math:log(4096 div resolution) div math:log(2))"/>
     </xsl:variable>
 
+
+<!--
+	Some variables follow that control what command-line options will be
+	passed to the scripts of this channel.
+-->
     <xsl:variable name="reduce">
       <xsl:if test="resolution != '4096'">
 	<xsl:value-of select="concat(' -R ', $reduceFactor)"/>
@@ -94,6 +122,7 @@ fi
       </xsl:if>
     </xsl:variable>
 
+<!-- Function starts here -->
 <xsl:value-of select="@xml:id"/> () {
 if [ "$1" == "check" ]
 then
