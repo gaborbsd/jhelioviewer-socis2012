@@ -22,6 +22,9 @@
     <!-- Mime type of the streamed content -->
     <stream-type>video/ogg</stream-type>
 
+    <!-- The base URL, where the streaming pages are installed -->
+    <urlbase>http://stream.example.com</urlbase>
+
     <!-- Path of the JPEG 2000 images -->
     <img-base>/home/gabor/img</img-base>
   </global>
@@ -34,21 +37,21 @@
 	(i.e. one day) and the latter means always emitting
 	the last image that arrived.
   -->
-  <entry xml:id="full512" mode="loop-dir">
+  <entry xml:id="channelId" mode="loop-dir">
 
     <!-- The mount point for the streaming server and the
 	 name of the named pipe that is used for communication
 	 of the components -->
-    <mount-point>full512.ogg</mount-point>
+    <mount-point>sample.ogg</mount-point>
 
     <!-- Name of the stream to dispaly for the end user -->
-    <name>Full 512x512 - May 26</name>
+    <name>Sample channel</name>
 
     <!-- A longer description -->
-    <desc>Full view of the Sun in 512x512 resolution from 2012 May 26</desc>
+    <desc>Sample description</desc>
 
-    <!-- The source directory if loop-dir mode is used -->
-    <source>AIA/1600/2012/05/26</source>
+    <!-- The source directory of images -->
+    <source>path/to/images</source>
 
     <!-- Frame per seconds in the generated video -->
     <fps>4</fps>
@@ -61,5 +64,38 @@
 	 which images arrive. Furthermore, if chosen too low
 	 the buffer stream will frequently underrun. -->
     <sec-per-img>3</sec-per-img>
+
+    <!-- OPTIONAL: If specified, the specified color palette will
+	 be applied to the images sent to the channel. -->
+    <palette>SDO_AIA_1600.png</palette>
+
+    <!-- OPTIONAL: If specified, the video will be subtitled
+	 with timestamps of the specific images with the
+	 timestamp in the specified format. The format
+	 specification must follow the rules of date(1). -->
+    <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
+
+    <!-- OPTIONAL: the region setting for Kakadu to crop the
+	 image to the specified region of interest. -->
+    <region>
+      <top>0.5</top>
+      <left>0.0</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
+
+    <!-- OPTIONAL: you can list 4 subchannels here and the streamed
+	 video will be tiled and clicking on a tile will load
+	 the corresponding subchannel, which can have further
+	 subchannels. To refer to the subchannels, specify their
+	 xml:id attributes here:
+
+    <subchannels>
+      <channel href="sub1"/>
+      <channel href="sub2"/>
+      <channel href="sub3"/>
+      <channel href="sub4"/>
+    </subchannels>
+    -->
   </entry>
 </configuration>
