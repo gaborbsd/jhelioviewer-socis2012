@@ -122,6 +122,27 @@ fi
       </xsl:if>
     </xsl:variable>
 
+    <xsl:variable name="sourceKey">
+      <xsl:value-of select="concat(observatory, '/', instrument, '/' detector)"/>
+    </xsl:variable>
+
+    <!--
+	Construct a source path, which can be specified either with a
+	simple source tag or with the observatory/instrument/detector/measurement
+	combination.
+    -->
+    <xsl:variable name="source">
+      <xsl:choose>
+	<xsl:when test="source">
+	  <xsl:value-of select="concat(img-base, '/', source)"/>
+	</xsl:when>
+
+	<xsl:otherwise>
+	  <xsl:value-of select="img-base"/>/<xsl:value-of select="document('lookup.xml')//entry[key = $sourceKey]/value"/>%%DATE%%/<xsl:value-of select="measurement"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
 <!-- Function starts here -->
 <xsl:value-of select="@xml:id"/> () {
 if [ "$1" == "check" ]

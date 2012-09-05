@@ -260,7 +260,8 @@ then
 	while :
 	do
 		datestr=`date +"%Y/%m/%d"`
-		f=`find ${SRCDIR}/${datestr} -type f -regex '.*\.jp2$' | sort | tail -n 1`
+		srcdir=`echo ${SRCDIR} | sed "s|%%DATE%%|${datestr}|g"`
+		f=`find ${srcdir} -type f -regex '.*\.jp2$' | sort | tail -n 1`
 
 		stream_file
 	done
@@ -272,7 +273,8 @@ then
 	while :
 	do
 		datestr=`date +"%Y/%m/%d"`
-		for f in `find ${SRCDIR}/${datestr} -type f -regex '.*\.jp2$' | sort`
+		srcdir=`echo ${SRCDIR} | sed "s|%%DATE%%|${datestr}|g"`
+		for f in `find ${srcdir} -type f -regex '.*\.jp2$' | sort`
 		do
 			stream_file
 		done

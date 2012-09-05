@@ -2,7 +2,8 @@
 
 <!ELEMENT global (stream-server, stream-port, stream-pass, stream-type, urlbase, img-base)>
 
-<!ELEMENT entry (mount-point, name, desc, source, fps, resolution, sec-per-img, palette?, dateformat?, region?, subchannels?)>
+<!ELEMENT entry (mount-point, name, desc, (source|(observatory, instrument, detector, measurement)),
+  fps, resolution, sec-per-img, palette?, dateformat?, region?, subchannels?)>
 
 <!ELEMENT stream-server (#PCDATA)>
 <!ELEMENT stream-port (#PCDATA)>
@@ -15,6 +16,10 @@
 <!ELEMENT name (#PCDATA)>
 <!ELEMENT desc (#PCDATA)>
 <!ELEMENT source (#PCDATA)>
+<!ELEMENT observatory (#PCDATA)>
+<!ELEMENT instrument (#PCDATA)>
+<!ELEMENT detector (#PCDATA)>
+<!ELEMENT measurement (#PCDATA)>
 <!ELEMENT fps (#PCDATA)>
 <!ELEMENT resolution (#PCDATA)>
 <!ELEMENT sec-per-img (#PCDATA)>

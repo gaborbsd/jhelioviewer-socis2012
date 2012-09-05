@@ -50,8 +50,20 @@
     <!-- A longer description -->
     <desc>Sample description</desc>
 
-    <!-- The source directory of images -->
+    <!--
+	 The source directory of images, if it is realtime or cyclic
+	 mode, use the %%DATE%% placeholder for the date to insert.
+    -->
     <source>path/to/images</source>
+
+    <!-- Instead of the above path names, for realtime or cyclic mode,
+	 you can also use the following tags to specify the source:
+
+        <observatory>SOHO</observatory>
+        <instrument>EIT</instrument>
+        <detector>EIT</detector>
+        <measurement>304</measurement>
+    -->
 
     <!-- Frame per seconds in the generated video -->
     <fps>4</fps>
