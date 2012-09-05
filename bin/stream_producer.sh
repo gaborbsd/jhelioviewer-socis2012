@@ -59,6 +59,7 @@ stream_file()
 	# Extract JPEG 2000 image
 	env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp ${REDUCE} ${CROP}
 	convert ${tmpfile}.bmp ${tmpfile}.png
+	rm ${tmpfile}.bmp
 
 	# Add palette
 	if [ ! -z "${PALETTE}" ]
