@@ -56,13 +56,15 @@
     -->
     <source>path/to/images</source>
 
-    <!-- Instead of the above path names, for realtime or cyclic mode,
-	 you can also use the following tags to specify the source:
+    <!-- Instead of the above path names, you can also use the
+	 following tags to specify the source.  For directory
+	 looping mode, also specify the date tag:
 
         <observatory>SOHO</observatory>
         <instrument>EIT</instrument>
         <detector>EIT</detector>
         <measurement>304</measurement>
+	<date>2012/09/05</date>
     -->
 
     <!-- Frame per seconds in the generated video -->

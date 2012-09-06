@@ -126,6 +126,16 @@ fi
       <xsl:value-of select="concat(observatory, '/', instrument, '/' detector)"/>
     </xsl:variable>
 
+    <xsl:variable name="date">
+      <xsl:choose>
+        <xsl:when test="date">
+          <xsl:value-of select="date"/>
+        </xsl:when>
+
+        <xsl:otherwise>%%DATE%%</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
     <!--
 	Construct a source path, which can be specified either with a
 	simple source tag or with the observatory/instrument/detector/measurement
@@ -138,7 +148,7 @@ fi
 	</xsl:when>
 
 	<xsl:otherwise>
-	  <xsl:value-of select="img-base"/>/<xsl:value-of select="document('lookup.xml')//entry[key = $sourceKey]/value"/>%%DATE%%/<xsl:value-of select="measurement"/>
+	  <xsl:value-of select="concat(img-base, document('lookup.xml')//entry[key = $sourceKey]/value, $date, measurement)"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
