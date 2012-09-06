@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+	Lookup file for directory paths. Lists the top-level
+	directory for each observatory/instrument/detector
+	combination. In the top-level directory, images are
+	always organized in a year/month/day/measurement
+	directory structure.
+-->
+
+<lookup>
+  <entry>
+    <key>SDO/AIA/AIA</key>
+    <value>AIA</value>
+  </entry>
+
+  <entry>
+    <key>SDO/AIA/AIA</key>
+    <value>HMI</value>
+  </entry>
+
+  <entry>
+    <key>SOHO/EIT/EIT</key>
+    <value></value>
+  </entry>
+  
+  <entry>
+    <key>SOHO/LASCO/C2</key>
+    <value>LASCO-C2</value>
+  </entry>
+  
+  <entry>
+    <key>SOHO/LASCO/C3</key>
+    <value>LASCO-C3</value>
+  </entry>
+
+  <entry>
+    <key>SOHO/MDI/MDI</key>
+    <value>MDI</value>
+  </entry>
+
+  <entry>
+    <key>STEREO-A/SECCHI/EUVI</key>
+    <value>EUVI-A</value>
+  </entry>
+  
+  <entry>
+    <key>STEREO-A/SECCHI/COR1</key>
+    <value>COR1-A</value>
+  </entry>
+  
+  <entry>
+    <key>STEREO-A/SECCHI/COR2</key>
+    <value>COR2-A</value>
+  </entry>
+
+  <entry>
+    <key>STEREO-B/SECCHI/EUVI</key>
+    <value>EUVI-B</value>
+  </entry>
+  
+  <entry>
+    <key>STEREO-B/SECCHI/COR1</key>
+    <value>COR1-B</value>
+  </entry>
+  
+  <entry>
+    <key>STEREO-B/SECCHI/COR2</key>
+    <value>COR2-B</value>
+  </entry>
+  
+  <entry>
+    <key>PROBA2/SWAP/SWAP</key>
+    <value>SWAP</value>
+  </entry>
+</lookup>
