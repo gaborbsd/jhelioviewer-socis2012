@@ -123,7 +123,7 @@ fi
     </xsl:variable>
 
     <xsl:variable name="sourceKey">
-      <xsl:value-of select="concat(observatory, '/', instrument, '/' detector)"/>
+      <xsl:value-of select="concat(observatory, '/', instrument, '/', detector)"/>
     </xsl:variable>
 
     <xsl:variable name="date">
@@ -155,22 +155,22 @@ fi
 
 <!-- Function starts here -->
 <xsl:value-of select="@xml:id"/> () {
-if [ "$1" == "check" ]
+if [ "$1" = "check" ]
 then
-  if [ "$2" == "producer" ]
+  if [ "$2" = "producer" ]
   then
     ps aux | grep -F producer | grep -qF <xsl:value-of select="@xml:id"/> || <xsl:value-of select="@xml:id"/> start producer
-  elif [ "$2" == "consumer" ]
+  elif [ "$2" = "consumer" ]
   then
     ps aux | grep -F consumer | grep -qF <xsl:value-of select="@xml:id"/> || <xsl:value-of select="@xml:id"/> start consumer
-  elif [ "$2" == "all" ]
+  elif [ "$2" = "all" ]
   then
     <xsl:value-of select="@xml:id"/> check producer
     <xsl:value-of select="@xml:id"/> check consumer
   else
     echo "Wrong check argument." &gt;&amp;2
   fi
-elif [ "$1" == "start" ]
+elif [ "$1" = "start" ]
 then
   if [ ! -p <xsl:value-of select="mount-point"/> ]
   then
@@ -178,7 +178,7 @@ then
     mkfifo <xsl:value-of select="mount-point"/>
   fi
 
-  if [ "$2" == "producer" ]
+  if [ "$2" = "producer" ]
   then
     ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="//img-base"/>/<xsl:value-of select="source"/> \
       -f <xsl:value-of select="fps"/> <xsl:value-of select="$reduce"/> <xsl:value-of select="$region"/> \
@@ -186,36 +186,36 @@ then
       -p <xsl:value-of select="mount-point"/> <xsl:value-of select="$dateFormat"/> \
       <xsl:value-of select="$palette"/> \
       &gt;&gt; <xsl:value-of select="mount-point"/> 2&gt;/dev/null &amp;
-  elif [ "$2" == "consumer" ]
+  elif [ "$2" = "consumer" ]
   then
     ./<xsl:value-of select="$consumer"/> -H localhost -p <xsl:value-of select="//stream-port"/> \
       -l <xsl:value-of select="//stream-pass"/> -m <xsl:value-of select="mount-point"/> \
       -s <xsl:value-of select="mount-point"/> -n "<xsl:value-of select="name"/>" \
       -d "<xsl:value-of select="desc"/>" &amp;
-  elif [ "$2" == "all" ]
+  elif [ "$2" = "all" ]
   then
     <xsl:value-of select="@xml:id"/> start producer
     <xsl:value-of select="@xml:id"/> start consumer
   else
     echo "Wrong start argument." &gt;&amp;2
   fi
-elif [ "$1" == "stop" ]
+elif [ "$1" = "stop" ]
 then
-  if [ "$2" == "producer" ]
+  if [ "$2" = "producer" ]
   then
     pid=`ps aux | grep -F producer | grep -F <xsl:value-of select="@xml:id"/> | awk '{print $2}'`
     if [ "${pid}" != "" ]
     then
       kill -KILL ${pid}
     fi
-  elif [ "$2" == "consumer" ]
+  elif [ "$2" = "consumer" ]
   then
     pid=`ps aux | grep -F consumer | grep -F <xsl:value-of select="@xml:id"/> | awk '{print $2}'`
     if [ "${pid}" != "" ]
     then
       kill -KILL ${pid}
     fi
-  elif [ "$2" == "all" ]
+  elif [ "$2" = "all" ]
   then
     <xsl:value-of select="@xml:id"/> stop producer
     <xsl:value-of select="@xml:id"/> stop consumer
