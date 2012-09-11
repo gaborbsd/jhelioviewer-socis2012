@@ -7,7 +7,8 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:math="http://exslt.org/math"
-  extension-element-prefixes="math">
+  xmlns:str="http://exslt.org/strings"
+  extension-element-prefixes="math str">
 
   <xsl:import href="includes.xsl"/>
 
@@ -114,16 +115,20 @@ fi
       </xsl:if>
     </xsl:variable>
 
+    <xsl:variable name="sourceKey">
+      <xsl:value-of select="concat(observatory, '/', instrument, '/', detector)"/>
+    </xsl:variable>
+
+    <xsl:variable name="paletteFile">
+      <xsl:value-of select="str:replace(document('lookup.xml')//entry[key = $sourceKey]/color-table, '%%MEASUREMENT%%', measurement)"/>
+    </xsl:variable>
+
     <xsl:variable name="palette">
       <xsl:if test="palette">
         <xsl:text> -P "</xsl:text>
-        <xsl:value-of select="./palette"/>
+        <xsl:value-of select="concat(//hvroot, '/', $palettePath, '/', $paletteFile)"/>
         <xsl:text>"</xsl:text>
       </xsl:if>
-    </xsl:variable>
-
-    <xsl:variable name="sourceKey">
-      <xsl:value-of select="concat(observatory, '/', instrument, '/', detector)"/>
     </xsl:variable>
 
     <xsl:variable name="date">

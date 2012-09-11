@@ -11,6 +11,9 @@
   <!-- Name of the producer script -->
   <xsl:variable name="producer">stream_producer.sh</xsl:variable>
 
+  <!-- Path of color tables relative to HV root dir -->
+  <xsl:variable name="palettePath">api/resources/images/color-tables</xsl:variable>
+
   <!-- Common HTML5 headers -->
   <xsl:template name="html.head.common">
     <meta charset="utf-8" />

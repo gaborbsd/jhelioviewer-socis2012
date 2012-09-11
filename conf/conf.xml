@@ -6,6 +6,7 @@
     <stream-port>4551</stream-port>
     <stream-pass>changeme</stream-pass>
     <stream-type>video/ogg</stream-type>
+    <hvroot>/home/gabor</hvroot>
     <urlbase>http://kovesdan.org/jhv</urlbase>
     <img-base>/home/gabor/img/delphi.nascom.nasa.gov/jp2</img-base>
   </global>

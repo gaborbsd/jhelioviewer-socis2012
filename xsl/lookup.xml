@@ -12,65 +12,78 @@
   <entry>
     <key>SDO/AIA/AIA</key>
     <value>AIA</value>
+    <color-table>SDO_AIA_%%MEASUREMENT%%.png</color-table>
   </entry>
 
   <entry>
-    <key>SDO/AIA/AIA</key>
+    <key>SDO/AIA/HMI</key>
     <value>HMI</value>
+    <color-table/>
   </entry>
 
   <entry>
     <key>SOHO/EIT/EIT</key>
-    <value></value>
+    <value>EIT</value>
+    <color-table>SDO_EIT_%%MEASUREMENT%%.png</color-table>
   </entry>
   
   <entry>
     <key>SOHO/LASCO/C2</key>
     <value>LASCO-C2</value>
+    <color-table>Red_Temperature.png</color-table>
   </entry>
   
   <entry>
     <key>SOHO/LASCO/C3</key>
     <value>LASCO-C3</value>
+    <color-table>Blue_White_Linear.png</color-table>
   </entry>
 
   <entry>
     <key>SOHO/MDI/MDI</key>
     <value>MDI</value>
+    <color-table/>
   </entry>
 
   <entry>
     <key>STEREO-A/SECCHI/EUVI</key>
     <value>EUVI-A</value>
+    <color-table>STEREO_EUVI_%%MEASUREMENT%%.png</color-table>
   </entry>
   
   <entry>
     <key>STEREO-A/SECCHI/COR1</key>
     <value>COR1-A</value>
+    <color-table>Green-White_Linear.png</color-table>
   </entry>
   
   <entry>
     <key>STEREO-A/SECCHI/COR2</key>
     <value>COR2-A</value>
+    <color-table>Red_Temperature.png</color-table>
   </entry>
 
   <entry>
     <key>STEREO-B/SECCHI/EUVI</key>
     <value>EUVI-B</value>
+    <color-table>STEREO_EUVI_%%MEASUREMENT%%.png</color-table>
   </entry>
   
   <entry>
     <key>STEREO-B/SECCHI/COR1</key>
     <value>COR1-B</value>
+    <color-table>Green-White_Linear.png</color-table>
   </entry>
   
   <entry>
     <key>STEREO-B/SECCHI/COR2</key>
     <value>COR2-B</value>
+    <color-table>Red_Temperature.png</color-table>
   </entry>
   
   <entry>
     <key>PROBA2/SWAP/SWAP</key>
     <value>SWAP</value>
+    <color-table/>
   </entry>
 </lookup>
