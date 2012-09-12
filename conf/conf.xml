@@ -15,7 +15,11 @@
     <mount-point>full2048.ogg</mount-point>
     <name>Full 2048x2048 - May 26</name>
     <desc>Full image of the Sun in 2048x2048 resolution from 2012 May 26</desc>
-    <source>AIA/1600/2012/05/26</source>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <date>2012/05/26</date>
     <fps>4</fps>
     <resolution>2048</resolution>
     <sec-per-img>3</sec-per-img>
@@ -25,7 +29,11 @@
     <mount-point>full1024.ogg</mount-point>
     <name>Full 1024x1024 - May 26</name>
     <desc>Full image of the Sun in 1024x1024 resolution from 2012 May 26</desc>
-    <source>AIA/1600/2012/05/26</source>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <date>2012/05/26</date>
     <fps>4</fps>
     <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
@@ -35,11 +43,15 @@
     <mount-point>full512.ogg</mount-point>
     <name>Full 512x512 - May 26</name>
     <desc>Full image of the Sun in 512x512 resolution from 2012 May 26</desc>
-    <source>AIA/1600/2012/05/26</source>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <date>2012/05/26</date>
     <fps>4</fps>
     <resolution>512</resolution>
     <sec-per-img>3</sec-per-img>
-    <palette>SDO_AIA_1600.png</palette>
+    <palette/>
     <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
     <subchannels>
       <channel href="topleft512"/>
@@ -53,7 +65,11 @@
     <mount-point>topleft512.ogg</mount-point>
     <name>Top-left 512x512 - May 26</name>
     <desc>Top-left view of the Sun in 512x512 resolution from 2012 May 26</desc>
-    <source>AIA/1600/2012/05/26</source>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <date>2012/05/26</date>
     <fps>4</fps>
     <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
@@ -70,7 +86,11 @@
     <mount-point>topright512.ogg</mount-point>
     <name>Top-right 512x512 - May 26</name>
     <desc>Top-right view of the Sun in 512x512 resolution from 2012 May 26</desc>
-    <source>AIA/1600/2012/05/26</source>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <date>2012/05/26</date>
     <fps>4</fps>
     <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
@@ -87,7 +107,11 @@
     <mount-point>bottomleft512.ogg</mount-point>
     <name>Bottom-left 512x512 - May 26</name>
     <desc>Bottom-left view of the Sun in 512x512 resolution from 2012 May 26</desc>
-    <source>AIA/1600/2012/05/26</source>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <date>2012/05/26</date>
     <fps>4</fps>
     <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>
@@ -103,7 +127,11 @@
     <mount-point>bottomright512.ogg</mount-point>
     <name>Bottom-right 512x512 - May 26</name>
     <desc>Bottom-right view of the Sun in 512x512 resolution from 2012 May 26</desc>
-    <source>AIA/1600/2012/05/26</source>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <date>2012/05/26</date>
     <fps>4</fps>
     <resolution>1024</resolution>
     <sec-per-img>3</sec-per-img>

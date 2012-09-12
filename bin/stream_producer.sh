@@ -38,7 +38,7 @@ MODE=loop-dir
 #
 usage()
 {
-	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-m mode] [-p pipe] [-P palette] [-D dateformat]"
+	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-m mode] [-p pipe] [-P palette] [-D dateformat] [-F]"
 	echo "$0 -h"
 }
 
@@ -89,7 +89,7 @@ stream_file()
 }
 
 # Parse command-line arguments
-while getopts ":c:d:D:f:hK:m:n:p:P:r:R:t:" opt; do
+while getopts ":c:d:D:f:FhK:m:n:p:P:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -107,6 +107,9 @@ while getopts ":c:d:D:f:hK:m:n:p:P:r:R:t:" opt; do
 	f)
 		FPS=${OPTARG}
 		;;
+	F)
+		FILE=yes
+		;;
         K)
                 KAKADUPATH=${OPTARG}
                 ;;
@@ -119,7 +122,8 @@ while getopts ":c:d:D:f:hK:m:n:p:P:r:R:t:" opt; do
 	p)
 		PIPE=${OPTARG}
 		;;
-	P)	PALETTE=${OPTARG}
+	P)
+		PALETTE=${OPTARG}
 		;;
         r)
                 RESOLUTION="-s ${OPTARG}"
@@ -230,7 +234,10 @@ then
 fi
 
 # Named pipe must exist
-if [ ! -p "${PIPE}" ]
+if [ -z "${FILE}" ] &&&&  
+
+
+[ ! -p "${PIPE}" ]
 then
 	echo "Named pipe does not exist." >&2
 	exit 2

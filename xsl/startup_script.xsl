@@ -7,12 +7,37 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:math="http://exslt.org/math"
-  xmlns:str="http://exslt.org/strings"
-  extension-element-prefixes="math str">
+  extension-element-prefixes="math">
 
   <xsl:import href="includes.xsl"/>
 
   <xsl:output method="text" encoding="utf-8"/>
+
+  <!--
+	Implements string replace functionality; seems xsltproc's EXSLT
+	implementation is buggy.
+  -->
+  <xsl:template name="str.replace">
+    <xsl:param name="string"/>
+    <xsl:param name="search"/>
+    <xsl:param name="replace"/>
+
+    <xsl:choose>
+      <xsl:when test="contains($string, $search)">
+        <xsl:value-of select="substring-before($string, $search)"/>
+        <xsl:value-of select="$replace"/>
+
+        <xsl:call-template name="str.replace">
+          <xsl:with-param name="string" select="substring-after($string, $search)"/>
+          <xsl:with-param name="search" select="$search"/>
+          <xsl:with-param name="replace" select="$replace"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$string"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
   <!--
 	Recursive template to get a list of entries.
@@ -119,8 +144,16 @@ fi
       <xsl:value-of select="concat(observatory, '/', instrument, '/', detector)"/>
     </xsl:variable>
 
+    <xsl:variable name="paletteFilePattern">
+      <xsl:value-of select="document('lookup.xml')//entry[key = $sourceKey]/color-table"/>
+    </xsl:variable>
+
     <xsl:variable name="paletteFile">
-      <xsl:value-of select="str:replace(document('lookup.xml')//entry[key = $sourceKey]/color-table, '%%MEASUREMENT%%', measurement)"/>
+      <xsl:call-template name="str.replace">
+	<xsl:with-param name="string" select="$paletteFilePattern"/>
+	<xsl:with-param name="search" select="'%%MEASUREMENT%%'"/>
+	<xsl:with-param name="replace" select="measurement"/>
+      </xsl:call-template>
     </xsl:variable>
 
     <xsl:variable name="palette">
@@ -147,15 +180,7 @@ fi
 	combination.
     -->
     <xsl:variable name="source">
-      <xsl:choose>
-	<xsl:when test="source">
-	  <xsl:value-of select="concat(img-base, '/', source)"/>
-	</xsl:when>
-
-	<xsl:otherwise>
-	  <xsl:value-of select="concat(img-base, document('lookup.xml')//entry[key = $sourceKey]/value, $date, measurement)"/>
-	</xsl:otherwise>
-      </xsl:choose>
+      <xsl:value-of select="concat(//img-base, '/', document('lookup.xml')//entry[key = $sourceKey]/value, '/', $date, '/', measurement)"/>
     </xsl:variable>
 
 <!-- Function starts here -->
@@ -185,7 +210,7 @@ then
 
   if [ "$2" = "producer" ]
   then
-    ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="//img-base"/>/<xsl:value-of select="source"/> \
+    ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="$source"/> \
       -f <xsl:value-of select="fps"/> <xsl:value-of select="$reduce"/> <xsl:value-of select="$region"/> \
       -n <xsl:value-of select="sec-per-img"/> -m <xsl:value-of select="@mode"/> \
       -p <xsl:value-of select="mount-point"/> <xsl:value-of select="$dateFormat"/> \
