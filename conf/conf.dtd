@@ -1,6 +1,7 @@
 <!ELEMENT configuration (global, entry+)>
 
-<!ELEMENT global (stream-server, stream-port, stream-pass, stream-type, hvroot, urlbase, img-base)>
+<!ELEMENT global (stream-server, stream-port, stream-pass, stream-type, kakadupath,
+  tmpdir, hvroot, urlbase, img-base)>
 
 <!ELEMENT entry (mount-point, name, desc, observatory, instrument, detector, measurement, date?,
   fps, resolution, sec-per-img, palette?, dateformat?, region?, subchannels?)>
@@ -9,6 +10,8 @@
 <!ELEMENT stream-port (#PCDATA)>
 <!ELEMENT stream-pass (#PCDATA)>
 <!ELEMENT stream-type (#PCDATA)>
+<!ELEMENT kakadupath (#PCDATA)>
+<!ELEMENT tmpdir (#PCDATA)>
 <!ELEMENT hvroot (#PCDATA)>
 <!ELEMENT urlbase (#PCDATA)>
 <!ELEMENT img-base (#PCDATA)>
@@ -35,6 +38,6 @@
 <!ELEMENT width (#PCDATA)>
 
 <!ATTLIST entry	xml:id ID #IMPLIED
-		mode (loop-dir|realtime|cyclic-day) #REQUIRED>
+		mode (loop-dir|realtime|cyclic-day|stored-recent-cyclic) #REQUIRED>
 
 <!ATTLIST channel href IDREF #REQUIRED>

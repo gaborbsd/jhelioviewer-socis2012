@@ -32,6 +32,7 @@ TMPDIR=./tmp
 SECPERIMG=3
 FPS=4
 MODE=loop-dir
+WRKDIR=`pwd`
 
 #
 # Prints usage info
@@ -47,49 +48,57 @@ usage()
 #
 stream_file()
 {
-	tmpfile=`mktemp --tmpdir=${TMPDIR} -u`
+	tmpfiles=
+	for _f in ${f}
+	do
+		tmpfile=`mktemp --tmpdir=${TMPDIR} -u`
 
-	# Format the date if DATEFORMAT is set.
-	if [ ! -z "${DATEFORMAT}" ]
-	then
-		lastmod=`stat -c "%y" ${f}`
-		date_formatted=`date --date="${lastmod}" "+%Y-%m-%d %H:%M:%S"`
-	fi
+		# Format the date if DATEFORMAT is set.
+		if [ ! -z "${DATEFORMAT}" ]
+		then
+			lastmod=`stat -c "%y" ${_f}`
+			date_formatted=`date --date="${lastmod}" "+%Y-%m-%d %H:%M:%S"`
+		fi
 
-	# Extract JPEG 2000 image
-	env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${f} -o ${tmpfile}.bmp ${REDUCE} ${CROP}
-	convert ${tmpfile}.bmp ${tmpfile}.png
-	rm ${tmpfile}.bmp
+		# Extract JPEG 2000 image
+		env LD_LIBRARY_PATH=${KAKADUPATH} ${KAKADUPATH}/kdu_expand -i ${_f} -o ${tmpfile}.bmp ${REDUCE} ${CROP}
+		convert ${tmpfile}.bmp ${tmpfile}.png
+		rm ${tmpfile}.bmp
 
-	# Add palette
-	if [ ! -z "${PALETTE}" ]
-	then
-		php add_palette.php ${tmpfile}.png ${PALETTE}
-	fi
+		# Add palette
+		if [ ! -z "${PALETTE}" ]
+		then
+			php ${WRKDIR}/add_palette.php ${tmpfile}.png ${PALETTE}
+		fi
 
-	# Only add date if DATEFORMAT is set
-	if [ ! -z "${DATEFORMAT}" ]
-	then
-		convert -size 110x14 xc:none -gravity center \
-			-stroke black -strokewidth 2 \
-			-annotate 0 "${date_formatted}" \
-			-background none -shadow 110x3+0+0 +repage \
-			-stroke none -fill white \
-			-annotate 0 "${date_formatted}" \
-			${tmpfile}.png  +swap -gravity south -geometry +0-3 \
-			-composite  ${tmpfile}.new.png
-		mv ${tmpfile}.new.png ${tmpfile}.png
-	fi
+		# Only add date if DATEFORMAT is set
+		if [ ! -z "${DATEFORMAT}" ]
+		then
+			convert -size 110x14 xc:none -gravity center \
+				-stroke black -strokewidth 2 \
+				-annotate 0 "${date_formatted}" \
+				-background none -shadow 110x3+0+0 +repage \
+				-stroke none -fill white \
+				-annotate 0 "${date_formatted}" \
+				${tmpfile}.png  +swap -gravity south -geometry +0-3 \
+				-composite  ${tmpfile}.new.png
+			mv ${tmpfile}.new.png ${tmpfile}.png
+		fi
+
+		tmpfiles="${tmpfiles} ${tmpfile}.png"
+	done
+
+	inputs=`echo ${tmpfiles} | sed -e 's| | -i |g' -e 's|^|-i |'`
 
 	# Stream to stdout
-	ffmpeg -loop_input -i ${tmpfile}.png -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg -
+	ffmpeg -loop_input ${inputs} -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg ${dest}
 
-	# Clean up temporary file
-	rm -f ${tmpfile}.png
+	# Clean up temporary files
+	rm -f ${tmpfiles}
 }
 
 # Parse command-line arguments
-while getopts ":c:d:D:f:FhK:m:n:p:P:r:R:t:" opt; do
+while getopts ":c:d:D:f:hK:m:n:p:P:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -106,9 +115,6 @@ while getopts ":c:d:D:f:FhK:m:n:p:P:r:R:t:" opt; do
 		;;
 	f)
 		FPS=${OPTARG}
-		;;
-	F)
-		FILE=yes
 		;;
         K)
                 KAKADUPATH=${OPTARG}
@@ -199,7 +205,7 @@ fi
 if [ ! -z ${REDUCE} ]
 then
 	_REDUCE=`echo ${REDUCE} | grep -oE '^-reduce [[:digit:]]+$'`
-	if [ -z ${_REDUCE} ]
+	if [ -z "${_REDUCE}" ]
 	then
 		echo "Invalid reduce scale specification. It can only contain digits." >&2
 		exit 2
@@ -220,9 +226,9 @@ then
 fi
 
 # Mode can only take these specific values
-if [ ! ${MODE} = "loop-dir" ] && [ ! ${MODE} = "realtime" ] && [ ! ${MODE} = "cyclic-day" ]
+if [ ! ${MODE} = "loop-dir" ] && [ ! ${MODE} = "realtime" ] && [ ! ${MODE} = "cyclic-day" ] && [ ! ${MODE} = "stored-recent-cyclic" ]
 then
-	echo "Invalid mode. It must be either loop-dir or realtime." >&2
+	echo "Invalid mode." >&2
 	exit 2
 fi
 
@@ -233,11 +239,7 @@ then
 	exit 2
 fi
 
-# Named pipe must exist
-if [ -z "${FILE}" ] &&&&  
-
-
-[ ! -p "${PIPE}" ]
+if [ ! -p "${PIPE}" ] && [ ${MODE} != "stored-recent-cyclic" ]
 then
 	echo "Named pipe does not exist." >&2
 	exit 2
@@ -245,6 +247,8 @@ fi
 
 # Create temp directory if does not exist
 mkdir -p ${TMPDIR}
+
+dest=-
 
 #
 # Main loop to iterate over the images in the source directory
@@ -286,4 +290,16 @@ then
 			stream_file
 		done
 	done
+elif [ ${MODE} = "stored-recent-cyclic" ]
+then
+	dest=${WRKDIR}/${PIPE}
+        while :
+        do
+                datestr=`date +"%Y/%m/%d"`
+                srcdir=`echo ${SRCDIR} | sed "s|%%DATE%%|${datestr}|g"`
+		cd ${srcdir}
+		f=`find . -type f -regex '.*\.jp2$' | tail -n 20`
+                stream_file
+		sleep 60
+        done
 fi

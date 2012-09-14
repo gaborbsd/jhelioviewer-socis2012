@@ -202,15 +202,18 @@ then
   fi
 elif [ "$1" = "start" ]
 then
+<xsl:if test="@mode != 'stored-recent-cyclic'">
   if [ ! -p <xsl:value-of select="mount-point"/> ]
   then
     rm -f <xsl:value-of select="mount-point"/>
     mkfifo <xsl:value-of select="mount-point"/>
   fi
+</xsl:if>
 
   if [ "$2" = "producer" ]
   then
     ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="$source"/> \
+      -K <xsl:value-of select="//kakadupath"/> -t <xsl:value-of select="//tmpdir"/> \
       -f <xsl:value-of select="fps"/> <xsl:value-of select="$reduce"/> <xsl:value-of select="$region"/> \
       -n <xsl:value-of select="sec-per-img"/> -m <xsl:value-of select="@mode"/> \
       -p <xsl:value-of select="mount-point"/> <xsl:value-of select="$dateFormat"/> \

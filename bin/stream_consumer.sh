@@ -69,9 +69,9 @@ done
 #
 
 # Named pipe must exist
-if [ ! -p ${PIPE} ]
+if [ ! -p ${PIPE} ] && [ ! -f ${PIPE} ]
 then
-	echo "Specified named pipe ${PIPE} does not exist." >&2
+	echo "Specified named pipe/file ${PIPE} does not exist." >&2
 	exit 2
 fi
 

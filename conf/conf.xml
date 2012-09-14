@@ -6,6 +6,8 @@
     <stream-port>4551</stream-port>
     <stream-pass>changeme</stream-pass>
     <stream-type>video/ogg</stream-type>
+    <kakadupath>/home/gabor/bin</kakadupath>
+    <tmpdir>/home/gabor/tmp</tmpdir>
     <hvroot>/home/gabor</hvroot>
     <urlbase>http://kovesdan.org/jhv</urlbase>
     <img-base>/home/gabor/img/delphi.nascom.nasa.gov/jp2</img-base>
@@ -39,7 +41,7 @@
     <sec-per-img>3</sec-per-img>
   </entry>
   
-  <entry xml:id="full512" mode="loop-dir">
+  <entry xml:id="full512" mode="stored-recent-cyclic">
     <mount-point>full512.ogg</mount-point>
     <name>Full 512x512 - May 26</name>
     <desc>Full image of the Sun in 512x512 resolution from 2012 May 26</desc>
