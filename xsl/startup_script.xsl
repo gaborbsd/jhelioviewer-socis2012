@@ -202,31 +202,24 @@ then
   fi
 elif [ "$1" = "start" ]
 then
-<xsl:if test="@mode != 'stored-recent-cyclic'">
-  if [ ! -p <xsl:value-of select="mount-point"/> ]
-  then
-    rm -f <xsl:value-of select="mount-point"/>
-    mkfifo <xsl:value-of select="mount-point"/>
-  fi
-</xsl:if>
 
   if [ "$2" = "producer" ]
   then
     ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="$source"/> \
       -K <xsl:value-of select="//kakadupath"/> -t <xsl:value-of select="//tmpdir"/> \
       -f <xsl:value-of select="fps"/> <xsl:value-of select="$reduce"/> <xsl:value-of select="$region"/> \
-      -n <xsl:value-of select="sec-per-img"/> -m <xsl:value-of select="@mode"/> \
-      -p <xsl:value-of select="mount-point"/> <xsl:value-of select="$dateFormat"/> \
-      <xsl:value-of select="$palette"/> \
-      &gt;&gt; <xsl:value-of select="mount-point"/> 2&gt;/dev/null &amp;
+      -n <xsl:value-of select="duration"/> \
+      -p <xsl:value-of select="concat(@xml:id, '.ogg')"/> <xsl:value-of select="$dateFormat"/> \
+      <xsl:value-of select="$palette"/> 2&gt;/dev/null &amp;
   elif [ "$2" = "consumer" ]
   then
     ./<xsl:value-of select="$consumer"/> -H localhost -p <xsl:value-of select="//stream-port"/> \
-      -l <xsl:value-of select="//stream-pass"/> -m <xsl:value-of select="mount-point"/> \
-      -s <xsl:value-of select="mount-point"/> -n "<xsl:value-of select="name"/>" \
+      -l <xsl:value-of select="//stream-pass"/> -m <xsl:value-of select="concat(@xml:id, '.ogg')"/> \
+      -s <xsl:value-of select="concat(@xml:id, '.ogg')"/> -n "<xsl:value-of select="name"/>" \
       -d "<xsl:value-of select="desc"/>" &amp;
   elif [ "$2" = "all" ]
   then
+    rm -rf <xsl:value-of select="@xml:id"/>*
     <xsl:value-of select="@xml:id"/> start producer
     <xsl:value-of select="@xml:id"/> start consumer
   else

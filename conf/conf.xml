@@ -13,8 +13,7 @@
     <img-base>/home/gabor/img/delphi.nascom.nasa.gov/jp2</img-base>
   </global>
 
-  <entry xml:id="full2048" mode="loop-dir">
-    <mount-point>full2048.ogg</mount-point>
+  <entry xml:id="full2048">
     <name>Full 2048x2048 - May 26</name>
     <desc>Full image of the Sun in 2048x2048 resolution from 2012 May 26</desc>
     <observatory>SDO</observatory>
@@ -22,13 +21,12 @@
     <detector>AIA</detector>
     <measurement>1600</measurement>
     <date>2012/05/26</date>
-    <fps>4</fps>
+    <fps>25</fps>
     <resolution>2048</resolution>
-    <sec-per-img>3</sec-per-img>
+    <duration>25</duration>
   </entry>
 
-  <entry xml:id="full1024" mode="loop-dir">
-    <mount-point>full1024.ogg</mount-point>
+  <entry xml:id="full1024">
     <name>Full 1024x1024 - May 26</name>
     <desc>Full image of the Sun in 1024x1024 resolution from 2012 May 26</desc>
     <observatory>SDO</observatory>
@@ -36,12 +34,12 @@
     <detector>AIA</detector>
     <measurement>1600</measurement>
     <date>2012/05/26</date>
-    <fps>4</fps>
+    <fps>25</fps>
     <resolution>1024</resolution>
-    <sec-per-img>3</sec-per-img>
+    <duration>25</duration>
   </entry>
   
-  <entry xml:id="full512" mode="stored-recent-cyclic">
+  <entry xml:id="full512">
     <mount-point>full512.ogg</mount-point>
     <name>Full 512x512 - May 26</name>
     <desc>Full image of the Sun in 512x512 resolution from 2012 May 26</desc>
@@ -50,9 +48,9 @@
     <detector>AIA</detector>
     <measurement>1600</measurement>
     <date>2012/05/26</date>
-    <fps>4</fps>
+    <fps>25</fps>
     <resolution>512</resolution>
-    <sec-per-img>3</sec-per-img>
+    <duration>25</duration>
     <palette/>
     <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
     <subchannels>
@@ -63,8 +61,7 @@
     </subchannels>
   </entry>
 
-  <entry xml:id="topleft512" mode="loop-dir">
-    <mount-point>topleft512.ogg</mount-point>
+  <entry xml:id="topleft512">
     <name>Top-left 512x512 - May 26</name>
     <desc>Top-left view of the Sun in 512x512 resolution from 2012 May 26</desc>
     <observatory>SDO</observatory>
@@ -72,9 +69,9 @@
     <detector>AIA</detector>
     <measurement>1600</measurement>
     <date>2012/05/26</date>
-    <fps>4</fps>
+    <fps>25</fps>
     <resolution>1024</resolution>
-    <sec-per-img>3</sec-per-img>
+    <duration>25</duration>
     <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
     <region>
       <top>0.0</top>
@@ -84,8 +81,7 @@
     </region>
   </entry>
 
-  <entry xml:id="topright512" mode="loop-dir">
-    <mount-point>topright512.ogg</mount-point>
+  <entry xml:id="topright512">
     <name>Top-right 512x512 - May 26</name>
     <desc>Top-right view of the Sun in 512x512 resolution from 2012 May 26</desc>
     <observatory>SDO</observatory>
@@ -93,9 +89,9 @@
     <detector>AIA</detector>
     <measurement>1600</measurement>
     <date>2012/05/26</date>
-    <fps>4</fps>
+    <fps>25</fps>
     <resolution>1024</resolution>
-    <sec-per-img>3</sec-per-img>
+    <duration>25</duration>
     <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
     <region>
       <top>0.0</top>
@@ -105,8 +101,7 @@
     </region>
   </entry>
 
-  <entry xml:id="bottomleft512" mode="loop-dir">
-    <mount-point>bottomleft512.ogg</mount-point>
+  <entry xml:id="bottomleft512">
     <name>Bottom-left 512x512 - May 26</name>
     <desc>Bottom-left view of the Sun in 512x512 resolution from 2012 May 26</desc>
     <observatory>SDO</observatory>
@@ -114,9 +109,9 @@
     <detector>AIA</detector>
     <measurement>1600</measurement>
     <date>2012/05/26</date>
-    <fps>4</fps>
+    <fps>25</fps>
     <resolution>1024</resolution>
-    <sec-per-img>3</sec-per-img>
+    <duration>25</duration>
     <region>
       <top>0.5</top>
       <left>0.0</left>
@@ -125,8 +120,7 @@
     </region>
   </entry>
 
-  <entry xml:id="bottomright512" mode="loop-dir">
-    <mount-point>bottomright512.ogg</mount-point>
+  <entry xml:id="bottomright512">
     <name>Bottom-right 512x512 - May 26</name>
     <desc>Bottom-right view of the Sun in 512x512 resolution from 2012 May 26</desc>
     <observatory>SDO</observatory>
@@ -134,9 +128,9 @@
     <detector>AIA</detector>
     <measurement>1600</measurement>
     <date>2012/05/26</date>
-    <fps>4</fps>
+    <fps>25</fps>
     <resolution>1024</resolution>
-    <sec-per-img>3</sec-per-img>
+    <duration>25</duration>
     <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
     <region>
       <top>0.5</top>

@@ -19,7 +19,7 @@ for ($i = 0; $i <= 255; $i++) {
 }
 
 // Save and clean up
-imagepng($gd, $input);
+imagepng($gd, $argv[1]);
 imagedestroy($gd);
 imagedestroy($ctable);
 ?>

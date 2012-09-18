@@ -69,11 +69,11 @@ done
 #
 
 # Named pipe must exist
-if [ ! -p ${PIPE} ] && [ ! -f ${PIPE} ]
-then
-	echo "Specified named pipe/file ${PIPE} does not exist." >&2
-	exit 2
-fi
+#if [ ! -p ${PIPE} ]
+#then
+#	echo "Specified named pipe/file ${PIPE} does not exist." >&2
+#	exit 2
+#fi
 
 # The stream port contains one or more digits
 _STREAMPORT=`echo ${STREAMPORT} | grep -oE '^[[:digit:]]+$'`
@@ -91,5 +91,7 @@ fi
 
 while :
 do
-	oggfwd -n "${NAME}" -d "${DESC}" ${STREAMHOST} ${STREAMPORT} ${STREAMPASS} /${MOUNTPOINT} < ${PIPE}
+	pattern=`echo ${PIPE} | sed 's|\.ogg|(,[[:digit:]]+)?.ogg|'`
+	input=`find . -type f | grep -E "${pattern}" | sort | tail -n 1`
+	oggfwd -n "${NAME}" -d "${DESC}" ${STREAMHOST} ${STREAMPORT} ${STREAMPASS} /${MOUNTPOINT} < ${input}
 done

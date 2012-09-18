@@ -1,21 +1,7 @@
 #!/bin/sh
 
 #
-# This script creates a video stream from images and outputs the
-# stream to stdout. The script has three different modes:
-#
-# (1) loop-dir: Loops the specified directory and repeats the
-#     contained images all the time.
-#
-# (2) realtime: In this case, only the sensor directory should
-#     be specified and the script finds the images for the
-#     current date and always emits the last image.
-#
-# (3) cyclic-day: In this case, only the sensor directory should
-#     be specified and the script finds the images for the
-#     current day and iterates through the images of the current
-#     day, including the recently arrived new images in each
-#     iteration.
+# This script creates a video stream from images.
 #
 # The script can be configured with various parameters that
 # control the characteristics off the created stream and also
@@ -27,11 +13,9 @@
 # Default values for variables
 #
 KAKADUPATH=./bin
-SRCDIR=img
 TMPDIR=./tmp
 SECPERIMG=3
 FPS=4
-MODE=loop-dir
 WRKDIR=`pwd`
 
 #
@@ -39,7 +23,7 @@ WRKDIR=`pwd`
 #
 usage()
 {
-	echo "$0 [-d sourcedir] [-K kakadu_path] [-n sec_per_img] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-m mode] [-p pipe] [-P palette] [-D dateformat] [-F]"
+	echo "$0 [-d sourcedir] [-K kakadu_path] [-n duration] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-p filename] [-P palette] [-D dateformat]"
 	echo "$0 -h"
 }
 
@@ -98,7 +82,7 @@ stream_file()
 }
 
 # Parse command-line arguments
-while getopts ":c:d:D:f:hK:m:n:p:P:r:R:t:" opt; do
+while getopts ":c:d:D:f:hK:n:p:P:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -119,9 +103,6 @@ while getopts ":c:d:D:f:hK:m:n:p:P:r:R:t:" opt; do
         K)
                 KAKADUPATH=${OPTARG}
                 ;;
-	m)
-		MODE=${OPTARG}
-		;;
         n)
                 SECPERIMG=${OPTARG}
                 ;;
@@ -156,13 +137,6 @@ done
 #
 # Some sanity check on the parameters follow
 #
-
-# The source directory must exist.
-if [ ! -d ${SRCDIR} ]
-then
-	echo "Invalid source directory specified." >&2
-	exit 2
-fi
 
 # The path to Kakadu must exist and must contain kdu_expand
 if [ ! -d ${KAKADUPATH} ] || [ ! -x ${KAKADUPATH}/kdu_expand ]
@@ -202,7 +176,7 @@ then
 fi
 
 # Reduce value contains one or more digit
-if [ ! -z ${REDUCE} ]
+if [ ! -z "${REDUCE}" ]
 then
 	_REDUCE=`echo ${REDUCE} | grep -oE '^-reduce [[:digit:]]+$'`
 	if [ -z "${_REDUCE}" ]
@@ -225,13 +199,6 @@ then
 	fi
 fi
 
-# Mode can only take these specific values
-if [ ! ${MODE} = "loop-dir" ] && [ ! ${MODE} = "realtime" ] && [ ! ${MODE} = "cyclic-day" ] && [ ! ${MODE} = "stored-recent-cyclic" ]
-then
-	echo "Invalid mode." >&2
-	exit 2
-fi
-
 # Check if palette exists
 if [ ! -z "${PALETTE}" ] && [ ! -f "${PALETTE}" ]
 then
@@ -239,67 +206,26 @@ then
 	exit 2
 fi
 
-if [ ! -p "${PIPE}" ] && [ ${MODE} != "stored-recent-cyclic" ]
-then
-	echo "Named pipe does not exist." >&2
-	exit 2
-fi
-
 # Create temp directory if does not exist
 mkdir -p ${TMPDIR}
-
-dest=-
 
 #
 # Main loop to iterate over the images in the source directory
 #
 
-# loop-dir only iterates on the directory inside an infinite loop
-if [ ${MODE} = "loop-dir" ]
-then
+dest=${WRKDIR}/${PIPE}
+cnt=0
+dest=`echo ${WRKDIR}/${PIPE} | sed "s|\.ogg|,${cnt}.ogg|"`
+pattern=`echo ${PIPE} | sed 's|\.ogg|(,[[:digit:]]+)?.ogg|'`
 while :
 do
-	for f in `find ${SRCDIR} -type f -regex '.*\.jp2$' | sort`
-	do
-		stream_file
-	done
+	datestr=`date +"%Y/%m/%d"`
+	srcdir=`echo ${SRCDIR} | sed "s|%%DATE%%|${datestr}|g"`
+	cd ${srcdir}
+	f=`find . -type f -regex '.*\.jp2$' | tail -n 20`
+	stream_file
+	sleep 60
+	cnt=`expr ${cnt} + 1`
+	dest=`echo ${WRKDIR}/${PIPE} | sed "s|\.ogg|,${cnt}.ogg|"`
+	find ${WRKDIR} -type f | grep -E "${pattern}" | sort -r | tail -n +3 | xargs rm -f
 done
-
-# realtime always takes the last image in current day's directory
-elif [ ${MODE} = "realtime" ]
-then
-	while :
-	do
-		datestr=`date +"%Y/%m/%d"`
-		srcdir=`echo ${SRCDIR} | sed "s|%%DATE%%|${datestr}|g"`
-		f=`find ${srcdir} -type f -regex '.*\.jp2$' | sort | tail -n 1`
-
-		stream_file
-	done
-
-# cyclic-day always iterates on the current day's directory and subsequent calls
-# of find will always take more and more images.
-elif [ ${MODE} = "cyclic-day" ]
-then
-	while :
-	do
-		datestr=`date +"%Y/%m/%d"`
-		srcdir=`echo ${SRCDIR} | sed "s|%%DATE%%|${datestr}|g"`
-		for f in `find ${srcdir} -type f -regex '.*\.jp2$' | sort`
-		do
-			stream_file
-		done
-	done
-elif [ ${MODE} = "stored-recent-cyclic" ]
-then
-	dest=${WRKDIR}/${PIPE}
-        while :
-        do
-                datestr=`date +"%Y/%m/%d"`
-                srcdir=`echo ${SRCDIR} | sed "s|%%DATE%%|${datestr}|g"`
-		cd ${srcdir}
-		f=`find . -type f -regex '.*\.jp2$' | tail -n 20`
-                stream_file
-		sleep 60
-        done
-fi

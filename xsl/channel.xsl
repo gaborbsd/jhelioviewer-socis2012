@@ -64,7 +64,7 @@
 
 	  <source>
 	    <xsl:attribute name="src">
-	      <xsl:value-of select="concat('http://', //stream-server, ':', //stream-port, '/', mount-point)"/>
+	      <xsl:value-of select="concat('http://', //stream-server, ':', //stream-port, '/', @xml:id, '.ogg')"/>
 	    </xsl:attribute>
 
 	    <xsl:attribute name="type">
