@@ -17,13 +17,15 @@ TMPDIR=./tmp
 SECPERIMG=3
 FPS=4
 WRKDIR=`pwd`
+NO_IMAGES=20
+FREQ=60
 
 #
 # Prints usage info
 #
 usage()
 {
-	echo "$0 [-d sourcedir] [-K kakadu_path] [-n duration] [-r resolution] [-c crop] [-f fps] [-R reducefactor] [-t tmpdir] [-p filename] [-P palette] [-D dateformat]"
+	echo "$0 [-b bitrate] [-c crop] [-d sourcedir] [-D dateformat] [-f fps] [-F renew] [-g maxgop] [-i no_images] [-K kakadu_path] [-n duration] [-p filename] [-P palette] [-r resolution] [-R reducefactor] [-t tmpdir]"
 	echo "$0 -h"
 }
 
@@ -75,18 +77,21 @@ stream_file()
 	inputs=`echo ${tmpfiles} | sed -e 's| | -i |g' -e 's|^|-i |'`
 
 	# Stream to stdout
-	ffmpeg -loop_input ${inputs} -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -f ogg ${dest}
+	ffmpeg -loop_input ${inputs} ${BITRATE} ${GOP} -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -y -f ogg ${dest}
 
 	# Clean up temporary files
 	rm -f ${tmpfiles}
 }
 
 # Parse command-line arguments
-while getopts ":c:d:D:f:hK:n:p:P:r:R:t:" opt; do
+while getopts ":b:c:d:D:f:F:g:i:hK:n:p:P:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
 		exit 0
+		;;
+	b)
+		BITRATE="-b ${OPTARG}"
 		;;
 	c)
 		CROP="-region ${OPTARG}"
@@ -99,6 +104,15 @@ while getopts ":c:d:D:f:hK:n:p:P:r:R:t:" opt; do
 		;;
 	f)
 		FPS=${OPTARG}
+		;;
+	F)
+		FREQ="${OPTARG}"
+		;;
+	g)
+		GOP="-g ${OPTARG}"
+		;;
+	i)
+		NO_IMAGES="${OPTARG}"
 		;;
         K)
                 KAKADUPATH=${OPTARG}
@@ -222,9 +236,9 @@ do
 	datestr=`date +"%Y/%m/%d"`
 	srcdir=`echo ${SRCDIR} | sed "s|%%DATE%%|${datestr}|g"`
 	cd ${srcdir}
-	f=`find . -type f -regex '.*\.jp2$' | tail -n 20`
+	f=`find . -type f -regex '.*\.jp2$' | tail -n ${NO_IMAGES}`
 	stream_file
-	sleep 60
+	sleep ${FREQ}
 	cnt=`expr ${cnt} + 1`
 	dest=`echo ${WRKDIR}/${PIPE} | sed "s|\.ogg|,${cnt}.ogg|"`
 	find ${WRKDIR} -type f | grep -E "${pattern}" | sort -r | tail -n +3 | xargs rm -f

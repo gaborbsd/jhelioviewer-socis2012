@@ -140,6 +140,38 @@ fi
       </xsl:if>
     </xsl:variable>
 
+    <xsl:variable name="maxgop">
+      <xsl:if test="maxgop">
+        <xsl:text> -g "</xsl:text>
+        <xsl:value-of select="./maxgop"/>
+        <xsl:text>"</xsl:text>
+      </xsl:if>
+    </xsl:variable>
+
+    <xsl:variable name="bitrate">
+      <xsl:if test="bitrate">
+        <xsl:text> -b "</xsl:text>
+        <xsl:value-of select="./bitrate"/>
+        <xsl:text>"</xsl:text>
+      </xsl:if>
+    </xsl:variable>
+
+    <xsl:variable name="renew">
+      <xsl:if test="renew">
+        <xsl:text> -F "</xsl:text>
+        <xsl:value-of select="./renew"/>
+        <xsl:text>"</xsl:text>
+      </xsl:if>
+    </xsl:variable>
+
+    <xsl:variable name="number-of-images">
+      <xsl:if test="number-of-images">
+        <xsl:text> -i "</xsl:text>
+        <xsl:value-of select="./number-of-images"/>
+        <xsl:text>"</xsl:text>
+      </xsl:if>
+    </xsl:variable>
+
     <xsl:variable name="sourceKey">
       <xsl:value-of select="concat(observatory, '/', instrument, '/', detector)"/>
     </xsl:variable>
@@ -205,18 +237,33 @@ then
 
   if [ "$2" = "producer" ]
   then
-    ./<xsl:value-of select="$producer"/> -d <xsl:value-of select="$source"/> \
-      -K <xsl:value-of select="//kakadupath"/> -t <xsl:value-of select="//tmpdir"/> \
-      -f <xsl:value-of select="fps"/> <xsl:value-of select="$reduce"/> <xsl:value-of select="$region"/> \
+    ./<xsl:value-of select="$producer"/> \
+      -d <xsl:value-of select="$source"/> \
+      -K <xsl:value-of select="//kakadupath"/> \
+      -t <xsl:value-of select="//tmpdir"/> \
+      -f <xsl:value-of select="fps"/> \
       -n <xsl:value-of select="duration"/> \
-      -p <xsl:value-of select="concat(@xml:id, '.ogg')"/> <xsl:value-of select="$dateFormat"/> \
-      <xsl:value-of select="$palette"/> 2&gt;/dev/null &amp;
+      -p <xsl:value-of select="concat(@xml:id, '.ogg')"/> \
+      <xsl:value-of select="$dateFormat"/> \
+      <xsl:value-of select="$palette"/> \
+      <xsl:value-of select="$number-of-images"/> \
+      <xsl:value-of select="$reduce"/> \
+      <xsl:value-of select="$region"/> \
+      <xsl:value-of select="$renew"/> \
+      <xsl:value-of select="$maxgop"/> \
+      <xsl:value-of select="$bitrate"/> \
+      2&gt;/dev/null &amp;
   elif [ "$2" = "consumer" ]
   then
-    ./<xsl:value-of select="$consumer"/> -H localhost -p <xsl:value-of select="//stream-port"/> \
-      -l <xsl:value-of select="//stream-pass"/> -m <xsl:value-of select="concat(@xml:id, '.ogg')"/> \
-      -s <xsl:value-of select="concat(@xml:id, '.ogg')"/> -n "<xsl:value-of select="name"/>" \
-      -d "<xsl:value-of select="desc"/>" &amp;
+    ./<xsl:value-of select="$consumer"/> \
+      -H localhost \
+      -p <xsl:value-of select="//stream-port"/> \
+      -l <xsl:value-of select="//stream-pass"/> \
+      -m <xsl:value-of select="concat(@xml:id, '.ogg')"/> \
+      -s <xsl:value-of select="concat(@xml:id, '.ogg')"/> \
+      -n "<xsl:value-of select="name"/>" \
+      -d "<xsl:value-of select="desc"/>" \
+      2&gt;/dev/null &amp;
   elif [ "$2" = "all" ]
   then
     rm -rf <xsl:value-of select="@xml:id"/>*
