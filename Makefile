@@ -6,6 +6,9 @@ WRKDIR=		$(shell pwd -P)
 SCRIPTDIR=	${WRKDIR}/script
 WEBDIR=		${WRKDIR}/www
 
+validate:
+	@xmllint --noout --valid conf/conf.xml && echo "OK. Configuration file validates."
+
 build-script:
 	mkdir -p ${SCRIPTDIR}
 	for d in ${SUBDIR}; do \
