@@ -22,27 +22,26 @@
     <!-- Mime type of the streamed content -->
     <stream-type>video/ogg</stream-type>
 
+    <!-- Where to look for Kakadu binaries -->
+    <kakadupath>/usr/local/bin</kakadupath>
+
+    <!-- Directory to use for temporary data -->
+    <tmpdir>/var/tmp</tmpdir>
+
+    <!-- Root directory where helioviewer.org is installed -->
+    <hvroot>/home/hv</hvroot>
+
     <!-- The base URL, where the streaming pages are installed -->
     <urlbase>http://stream.example.com</urlbase>
 
     <!-- Path of the JPEG 2000 images -->
-    <img-base>/home/gabor/img</img-base>
+    <img-base>/var/img</img-base>
   </global>
   
   <!--
-	One entry describes one streaming channel that can
-	have very different properties. The mode parameter
-	can be either loop-dir or realtime. The former means
-	constantly repeatig the images from one folder
-	(i.e. one day) and the latter means always emitting
-	the last image that arrived.
+	One entry describes one streaming channel.
   -->
-  <entry xml:id="channelId" mode="loop-dir">
-
-    <!-- The mount point for the streaming server and the
-	 name of the named pipe that is used for communication
-	 of the components -->
-    <mount-point>sample.ogg</mount-point>
+  <entry xml:id="channelId">
 
     <!-- Name of the stream to dispaly for the end user -->
     <name>Sample channel</name>
@@ -50,66 +49,61 @@
     <!-- A longer description -->
     <desc>Sample description</desc>
 
-    <!--
-	 The source directory of images, if it is realtime or cyclic
-	 mode, use the %%DATE%% placeholder for the date to insert.
-    -->
-    <source>path/to/images</source>
-
-    <!-- Instead of the above path names, you can also use the
-	 following tags to specify the source.  For directory
-	 looping mode, also specify the date tag:
-
-        <observatory>SOHO</observatory>
-        <instrument>EIT</instrument>
-        <detector>EIT</detector>
-        <measurement>304</measurement>
-	<date>2012/09/05</date>
-    -->
+    <!-- The source to read images from -->
+    <observatory>SOHO</observatory>
+    <instrument>EIT</instrument>
+    <detector>EIT</detector>
+    <measurement>304</measurement>
 
     <!-- Frame per seconds in the generated video -->
-    <fps>4</fps>
+    <fps>25</fps>
 
     <!-- Resolution of the generated video (1:1 proportion) -->
     <resolution>512</resolution>
 
-    <!-- Number of seconds that one image should be displayed.
-	 It should be tuned considering the frequency with
-	 which images arrive. Furthermore, if chosen too low
-	 the buffer stream will frequently underrun. -->
-    <sec-per-img>3</sec-per-img>
+    <!-- Duration of each generated video -->
+    <duration>25</duration>
 
-    <!-- OPTIONAL: If specified, the specified color palette will
-	 be applied to the images sent to the channel. -->
-    <palette>SDO_AIA_1600.png</palette>
+    <!-- OPTIONAL: output bitrate -->
+    <bitrate>20k</bitrate>
 
-    <!-- OPTIONAL: If specified, the video will be subtitled
-	 with timestamps of the specific images with the
-	 timestamp in the specified format. The format
-	 specification must follow the rules of date(1). -->
+    <!-- OPTIONAL: GOP size -->
+    <maxgop>12</maxgop>
+
+    <!-- OPTIONAL: Number of images per video -->
+    <number-of-images>25</number-of-images>
+
+    <!-- OPTIONAL: Frequency in secs with which the video is regenerated -->
+    <renew>90</renew>
+
+    <!-- OPTIONAL: Uses color palette when specified -->
+    <palette/>
+
+    <!-- OPTIONAL: The date format to print on images as expeected by date(1) -->
     <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
 
-    <!-- OPTIONAL: the region setting for Kakadu to crop the
-	 image to the specified region of interest. -->
-    <region>
-      <top>0.5</top>
-      <left>0.0</left>
-      <height>0.5</height>
-      <width>0.5</width>
-    </region>
+    <!-- OPTIONAL: Region to crop image to
+
+      <region>
+        <top>0.5</top>
+        <left>0.5</left>
+        <height>0.5</height>
+        <width>0.5</width>
+      </region>
+    -->
 
     <!-- OPTIONAL: you can list 4 subchannels here and the streamed
-	 video will be tiled and clicking on a tile will load
-	 the corresponding subchannel, which can have further
-	 subchannels. To refer to the subchannels, specify their
-	 xml:id attributes here:
+	video will be tiled and clicking on a tile will load
+	the corresponding subchannel, which can have further
+	subchannels. To refer to the subchannels, specify their
+	xml:id attributes here:
 
-    <subchannels>
-      <channel href="sub1"/>
-      <channel href="sub2"/>
-      <channel href="sub3"/>
-      <channel href="sub4"/>
-    </subchannels>
+      <subchannels>
+        <channel href="sub1"/>
+        <channel href="sub2"/>
+        <channel href="sub3"/>
+        <channel href="sub4"/>
+      </subchannels>
     -->
   </entry>
 </configuration>
