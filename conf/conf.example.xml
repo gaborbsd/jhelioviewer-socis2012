@@ -68,7 +68,7 @@
     <bitrate>20k</bitrate>
 
     <!-- OPTIONAL: GOP size -->
-    <maxgop>12</maxgop>
+    <gop>12</gop>
 
     <!-- OPTIONAL: Number of images per video -->
     <number-of-images>25</number-of-images>

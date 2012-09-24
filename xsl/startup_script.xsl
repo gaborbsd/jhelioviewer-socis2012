@@ -140,10 +140,10 @@ fi
       </xsl:if>
     </xsl:variable>
 
-    <xsl:variable name="maxgop">
-      <xsl:if test="maxgop">
+    <xsl:variable name="gop">
+      <xsl:if test="gop">
         <xsl:text> -g "</xsl:text>
-        <xsl:value-of select="./maxgop"/>
+        <xsl:value-of select="./gop"/>
         <xsl:text>"</xsl:text>
       </xsl:if>
     </xsl:variable>
@@ -250,9 +250,9 @@ then
       <xsl:value-of select="$reduce"/> \
       <xsl:value-of select="$region"/> \
       <xsl:value-of select="$renew"/> \
-      <xsl:value-of select="$maxgop"/> \
+      <xsl:value-of select="$gop"/> \
       <xsl:value-of select="$bitrate"/> \
-      2&gt;/dev/null &amp;
+      &amp;
   elif [ "$2" = "consumer" ]
   then
     ./<xsl:value-of select="$consumer"/> \
@@ -263,7 +263,7 @@ then
       -s <xsl:value-of select="concat(@xml:id, '.ogg')"/> \
       -n "<xsl:value-of select="name"/>" \
       -d "<xsl:value-of select="desc"/>" \
-      2&gt;/dev/null &amp;
+      &amp;
   elif [ "$2" = "all" ]
   then
     rm -rf <xsl:value-of select="@xml:id"/>*

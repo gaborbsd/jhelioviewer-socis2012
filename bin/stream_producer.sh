@@ -12,9 +12,7 @@
 #
 # Default values for variables
 #
-KAKADUPATH=./bin
-TMPDIR=./tmp
-SECPERIMG=3
+DURATION=3
 FPS=4
 WRKDIR=`pwd`
 NO_IMAGES=20
@@ -77,7 +75,7 @@ stream_file()
 	inputs=`echo ${tmpfiles} | sed -e 's| | -i |g' -e 's|^|-i |'`
 
 	# Stream to stdout
-	ffmpeg -loop_input ${inputs} ${BITRATE} ${GOP} -t ${SECPERIMG} -r ${FPS} ${RESOLUTION} -vcodec libtheora -y -f ogg ${dest}
+	ffmpeg -loop_input ${inputs} ${BITRATE} ${GOP} -t ${DURATION} -r ${FPS} ${RESOLUTION} -vcodec libtheora -y -f ogg ${dest}
 
 	# Clean up temporary files
 	rm -f ${tmpfiles}
@@ -118,10 +116,10 @@ while getopts ":b:c:d:D:f:F:g:i:hK:n:p:P:r:R:t:" opt; do
                 KAKADUPATH=${OPTARG}
                 ;;
         n)
-                SECPERIMG=${OPTARG}
+                DURATION=${OPTARG}
                 ;;
 	p)
-		PIPE=${OPTARG}
+		SOURCE=${OPTARG}
 		;;
 	P)
 		PALETTE=${OPTARG}
@@ -172,9 +170,9 @@ then
 fi
 
 # Seconds value contains one or more digit
-_SECPERIMG=`echo ${SECPERIMG} | grep -oE '^[[:digit:]]+$'`
+_DURATION=`echo ${DURATION} | grep -oE '^[[:digit:]]+$'`
 
-if [ -z ${_SECPERIMG} ]
+if [ -z ${_DURATION} ]
 then
 	echo "Invalid second per image specification. It can only contain digits." >&2
 	exit 2
@@ -227,10 +225,10 @@ mkdir -p ${TMPDIR}
 # Main loop to iterate over the images in the source directory
 #
 
-dest=${WRKDIR}/${PIPE}
+dest=${WRKDIR}/${SOURCE}
 cnt=0
-dest=`echo ${WRKDIR}/${PIPE} | sed "s|\.ogg|,${cnt}.ogg|"`
-pattern=`echo ${PIPE} | sed 's|\.ogg|(,[[:digit:]]+)?.ogg|'`
+dest=`echo ${WRKDIR}/${SOURCE} | sed "s|\.ogg|,${cnt}.ogg|"`
+pattern=`echo ${SOURCE} | sed 's|\.ogg|(,[[:digit:]]+)?.ogg|'`
 while :
 do
 	datestr=`date +"%Y/%m/%d"`
@@ -240,6 +238,6 @@ do
 	stream_file
 	sleep ${FREQ}
 	cnt=`expr ${cnt} + 1`
-	dest=`echo ${WRKDIR}/${PIPE} | sed "s|\.ogg|,${cnt}.ogg|"`
-	find ${WRKDIR} -type f | grep -E "${pattern}" | sort -r | tail -n +3 | xargs rm -f
+	dest=`echo ${WRKDIR}/${SOURCE} | sed "s|\.ogg|,${cnt}.ogg|"`
+	find ${WRKDIR} -type f -regex \.ogg | grep -E "${pattern}" | sort -r | tail -n +3 | xargs rm -f
 done

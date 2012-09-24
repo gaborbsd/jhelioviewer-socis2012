@@ -1,5 +1,12 @@
-<!DOCTYPE configuration PUBLIC "-//JHelioviewer//DTD Channel Configuration//EN"
-  "conf.dtd">
+<!DOCTYPE configuration PUBLIC "-//JHelioviewer//DTD Channel Configuration//EN" "conf.dtd" [
+<!ENTITY pct '&#37;'>
+<!ENTITY dateformat '+&pct;Y-&pct;m-&pct;d &pct;H:&pct;M:&pct;S'>
+<!ENTITY duration '25'>
+<!ENTITY gop '25'>
+<!ENTITY nrimages '25'>
+<!ENTITY renew '90'>
+]>
+
 <configuration>
   <global>
     <stream-server>150.214.150.68</stream-server>
@@ -43,8 +50,8 @@
 -->
   
   <entry xml:id="full512">
-    <name>Full 512x512 - May 26</name>
-    <desc>Full image of the Sun in 512x512 resolution from 2012 May 26</desc>
+    <name>Full 512x512</name>
+    <desc>Full image of the Sun in 512x512 resolution</desc>
     <observatory>SDO</observatory>
     <instrument>AIA</instrument>
     <detector>AIA</detector>
@@ -52,12 +59,12 @@
     <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>512</resolution>
-    <duration>25</duration>
-    <maxgop>12</maxgop>
-    <number-of-images>25</number-of-images>
-    <renew>90</renew>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
     <palette/>
-    <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
+    <dateformat>&dateformat;</dateformat>
     <subchannels>
       <channel href="topleft512"/>
       <channel href="topright512"/>
@@ -67,8 +74,8 @@
   </entry>
 
   <entry xml:id="topleft512">
-    <name>Top-left 512x512 - May 26</name>
-    <desc>Top-left view of the Sun in 512x512 resolution from 2012 May 26</desc>
+    <name>Top-left 512x512</name>
+    <desc>Top-left view of the Sun in 512x512 resolution</desc>
     <observatory>SDO</observatory>
     <instrument>AIA</instrument>
     <detector>AIA</detector>
@@ -76,9 +83,12 @@
     <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>25</duration>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
     <palette/>
-    <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
+    <dateformat>&dateformat;</dateformat>
     <region>
       <top>0.0</top>
       <left>0.0</left>
@@ -88,8 +98,8 @@
   </entry>
 
   <entry xml:id="topright512">
-    <name>Top-right 512x512 - May 26</name>
-    <desc>Top-right view of the Sun in 512x512 resolution from 2012 May 26</desc>
+    <name>Top-right 512x512</name>
+    <desc>Top-right view of the Sun in 512x512 resolution</desc>
     <observatory>SDO</observatory>
     <instrument>AIA</instrument>
     <detector>AIA</detector>
@@ -97,9 +107,12 @@
     <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>25</duration>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
     <palette/>
-    <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
+    <dateformat>&dateformat;</dateformat>
     <region>
       <top>0.0</top>
       <left>0.5</left>
@@ -109,8 +122,8 @@
   </entry>
 
   <entry xml:id="bottomleft512">
-    <name>Bottom-left 512x512 - May 26</name>
-    <desc>Bottom-left view of the Sun in 512x512 resolution from 2012 May 26</desc>
+    <name>Bottom-left 512x512</name>
+    <desc>Bottom-left view of the Sun in 512x512 resolution</desc>
     <observatory>SDO</observatory>
     <instrument>AIA</instrument>
     <detector>AIA</detector>
@@ -118,8 +131,12 @@
     <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>25</duration>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
     <palette/>
+    <dateformat>&dateformat;</dateformat>
     <region>
       <top>0.5</top>
       <left>0.0</left>
@@ -129,8 +146,8 @@
   </entry>
 
   <entry xml:id="bottomright512">
-    <name>Bottom-right 512x512 - May 26</name>
-    <desc>Bottom-right view of the Sun in 512x512 resolution from 2012 May 26</desc>
+    <name>Bottom-right 512x512</name>
+    <desc>Bottom-right view of the Sun in 512x512 resolution</desc>
     <observatory>SDO</observatory>
     <instrument>AIA</instrument>
     <detector>AIA</detector>
@@ -138,9 +155,12 @@
     <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>25</duration>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
     <palette/>
-    <dateformat>+%Y-%m-%d %H:%M:%S</dateformat>
+    <dateformat>&dateformat;</dateformat>
     <region>
       <top>0.5</top>
       <left>0.5</left>
