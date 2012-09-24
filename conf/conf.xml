@@ -56,7 +56,6 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>512</resolution>
     <duration>&duration;</duration>
@@ -80,7 +79,6 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>1024</resolution>
     <duration>&duration;</duration>
@@ -104,7 +102,6 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>1024</resolution>
     <duration>&duration;</duration>
@@ -128,7 +125,6 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>1024</resolution>
     <duration>&duration;</duration>
@@ -152,7 +148,6 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>1024</resolution>
     <duration>&duration;</duration>

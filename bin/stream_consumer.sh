@@ -11,10 +11,8 @@
 #
 # Default variable values
 #
-SOURCE=stream.ogg
 STREAMHOST=localhost
 STREAMPORT=4551
-MOUNTPOINT=helio.ogg
 NAME="Unnamed Video Stream"
 DESC="JHelioviewer Video Channel"
 
@@ -84,7 +82,7 @@ fi
 
 while :
 do
-	pattern=`echo ${SOUCE} | sed 's|\.ogg|(,[[:digit:]]+)?.ogg|'`
+	pattern=`echo ${SOURCE} | sed 's|\.ogg|(,[[:digit:]]+)?.ogg|'`
 	input=`find . -type f | grep -E "${pattern}" | sort | tail -n 1`
 	oggfwd -n "${NAME}" -d "${DESC}" ${STREAMHOST} ${STREAMPORT} ${STREAMPASS} /${MOUNTPOINT} < ${input}
 done
