@@ -2,7 +2,7 @@
 <!ENTITY pct '&#37;'>
 <!ENTITY dateformat '+&pct;Y-&pct;m-&pct;d &pct;H:&pct;M:&pct;S'>
 <!ENTITY duration '25'>
-<!ENTITY gop '25'>
+<!ENTITY gop '50'>
 <!ENTITY nrimages '25'>
 <!ENTITY renew '90'>
 ]>
