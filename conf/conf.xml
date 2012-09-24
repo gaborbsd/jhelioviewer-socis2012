@@ -22,31 +22,234 @@
 
 <!--
   <entry xml:id="full2048">
-    <name>Full 2048x2048 - May 26</name>
-    <desc>Full image of the Sun in 2048x2048 resolution from 2012 May 26</desc>
+    <name>Full 2048x2048</name>
+    <desc>Full image of the Sun in 2048x2048 resolution</desc>
     <observatory>SDO</observatory>
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>2048</resolution>
-    <duration>25</duration>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
+    <palette/>
+    <dateformat>&dateformat;</dateformat>
+    <subchannels>
+      <channel href="topleft2048"/>
+      <channel href="topright2048"/>
+      <channel href="bottomleft2048"/>
+      <channel href="bottomright2048"/>
+    </subchannels>
+  </entry>
+
+  <entry xml:id="topleft2048">
+    <name>Top-left 2048x2048</name>
+    <desc>Top-left view of the Sun in 2048x2048 resolution</desc>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <fps>25</fps>
+    <resolution>1024</resolution>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
+    <palette/>
+    <dateformat>&dateformat;</dateformat>
+    <region>
+      <top>0.0</top>
+      <left>0.0</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
+  </entry>
+
+  <entry xml:id="topright2048">
+    <name>Top-right 2048x2048</name>
+    <desc>Top-right view of the Sun in 2048x2048 resolution</desc>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <fps>25</fps>
+    <resolution>1024</resolution>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
+    <palette/>
+    <dateformat>&dateformat;</dateformat>
+    <region>
+      <top>0.0</top>
+      <left>0.5</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
+  </entry>
+
+  <entry xml:id="bottomleft2048">
+    <name>Bottom-left 2048x2048</name>
+    <desc>Bottom-left view of the Sun in 2048x2048 resolution</desc>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <fps>25</fps>
+    <resolution>1024</resolution>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
+    <palette/>
+    <dateformat>&dateformat;</dateformat>
+    <region>
+      <top>0.5</top>
+      <left>0.0</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
+  </entry>
+
+  <entry xml:id="bottomright2048">
+    <name>Bottom-right 2048x2048</name>
+    <desc>Bottom-right view of the Sun in 2048x2048 resolution</desc>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <fps>25</fps>
+    <resolution>1024</resolution>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
+    <palette/>
+    <dateformat>&dateformat;</dateformat>
+    <region>
+      <top>0.5</top>
+      <left>0.5</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
   </entry>
 
   <entry xml:id="full1024">
-    <name>Full 1024x1024 - May 26</name>
-    <desc>Full image of the Sun in 1024x1024 resolution from 2012 May 26</desc>
+    <name>Full 1024x1024</name>
+    <desc>Full image of the Sun in 1024x1024 resolution</desc>
     <observatory>SDO</observatory>
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <date>2012/05/26</date>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>25</duration>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
+    <palette/>
+    <dateformat>&dateformat;</dateformat>
+    <subchannels>
+      <channel href="topleft1024"/>
+      <channel href="topright1024"/>
+      <channel href="bottomleft1024"/>
+      <channel href="bottomright1024"/>
+    </subchannels>
   </entry>
 
+  <entry xml:id="topleft1024">
+    <name>Top-left 1024x1024</name>
+    <desc>Top-left view of the Sun in 1024x1024 resolution</desc>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <fps>25</fps>
+    <resolution>1024</resolution>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
+    <palette/>
+    <dateformat>&dateformat;</dateformat>
+    <region>
+      <top>0.0</top>
+      <left>0.0</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
+  </entry>
+
+  <entry xml:id="topright1024">
+    <name>Top-right 1024x1024</name>
+    <desc>Top-right view of the Sun in 1024x1024 resolution</desc>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <fps>25</fps>
+    <resolution>1024</resolution>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
+    <palette/>
+    <dateformat>&dateformat;</dateformat>
+    <region>
+      <top>0.0</top>
+      <left>0.5</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
+  </entry>
+
+  <entry xml:id="bottomleft1024">
+    <name>Bottom-left 1024x1024</name>
+    <desc>Bottom-left view of the Sun in 1024x1024 resolution</desc>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <fps>25</fps>
+    <resolution>1024</resolution>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
+    <palette/>
+    <dateformat>&dateformat;</dateformat>
+    <region>
+      <top>0.5</top>
+      <left>0.0</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
+  </entry>
+
+  <entry xml:id="bottomright1024">
+    <name>Bottom-right 1024x1024</name>
+    <desc>Bottom-right view of the Sun in 1024x1024 resolution</desc>
+    <observatory>SDO</observatory>
+    <instrument>AIA</instrument>
+    <detector>AIA</detector>
+    <measurement>1600</measurement>
+    <fps>25</fps>
+    <resolution>1024</resolution>
+    <duration>&duration;</duration>
+    <gop>&gop;</gop>
+    <number-of-images>&nrimages;</number-of-images>
+    <renew>&renew;</renew>
+    <palette/>
+    <dateformat>&dateformat;</dateformat>
+    <region>
+      <top>0.5</top>
+      <left>0.5</left>
+      <height>0.5</height>
+      <width>0.5</width>
+    </region>
+  </entry>
 -->
   
   <entry xml:id="full512">
