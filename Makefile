@@ -1,5 +1,6 @@
 SUBDIR=		bin
 SUBDIR+=	data
+SUBDIR+=	img
 SUBDIR+=	xsl
 
 WRKDIR=		$(shell pwd -P)
