@@ -75,7 +75,7 @@ stream_file()
 	inputs=`echo ${tmpfiles} | sed -e 's| | -i |g' -e 's|^|-i |'`
 
 	# Stream to stdout
-	ffmpeg ${inputs} ${BITRATE} ${GOP} -t ${DURATION} -r ${FPS} ${RESOLUTION} -loop_input -vcodec libtheora -y -f ogg ${dest}
+	ffmpeg -loop_input ${inputs} ${BITRATE} ${GOP} -t ${DURATION} -r ${FPS} ${RESOLUTION} -vcodec libtheora -y -f ogg ${dest}
 
 	# Clean up temporary files
 	rm -f ${tmpfiles}
