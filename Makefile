@@ -1,6 +1,5 @@
 SUBDIR=		bin
 SUBDIR+=	data
-SUBDIR+=	img
 SUBDIR+=	xsl
 
 WRKDIR=		$(shell pwd -P)
@@ -21,7 +20,7 @@ build-www:
 	for d in ${SUBDIR}; do \
 		make -C $$d build-www WEBDIR=${WEBDIR}; \
 	done
-	cp -R img/*.png ${WEBDIR}/
+	cp -R img ${WEBDIR}/
 
 clean:
 	rm -rf ${SCRIPTDIR} ${WEBDIR}
