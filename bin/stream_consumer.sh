@@ -84,5 +84,10 @@ while :
 do
 	pattern=`echo ${SOURCE} | sed 's|\.ogg|(,[[:digit:]]+)?.ogg|'`
 	input=`find . -type f | grep -E "${pattern}" | sort | tail -n 1`
-	oggfwd -n "${NAME}" -d "${DESC}" ${STREAMHOST} ${STREAMPORT} ${STREAMPASS} /${MOUNTPOINT} < ${input}
+	if [ -n "${input}" ]
+	then
+		oggfwd -n "${NAME}" -d "${DESC}" ${STREAMHOST} ${STREAMPORT} ${STREAMPASS} /${MOUNTPOINT} < ${input}
+	else
+		sleep 5
+	fi
 done
