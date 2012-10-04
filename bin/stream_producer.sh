@@ -239,5 +239,5 @@ do
 	sleep ${FREQ}
 	cnt=`expr ${cnt} + 1`
 	dest=`echo ${WRKDIR}/${SOURCE} | sed "s|\.ogg|,${cnt}.ogg|"`
-	find ${WRKDIR} -type f -depth 1 -regex \.ogg | grep -E "${pattern}" | sort -r | tail -n +3 | xargs rm -f
+	find ${WRKDIR} -maxdepth 1 -type f -regex '.*\.ogg'| grep -E "${pattern}" | sort --version-sort -r | tail -n +3 | xargs rm -f
 done
