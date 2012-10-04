@@ -20,7 +20,8 @@ build-www:
 	for d in ${SUBDIR}; do \
 		make -C $$d build-www WEBDIR=${WEBDIR}; \
 	done
-	cp -R img ${WEBDIR}/
+	mkdir -p ${WEBDIR}/img
+	cp -R img/*.png ${WEBDIR}/img/
 
 clean:
 	rm -rf ${SCRIPTDIR} ${WEBDIR}
