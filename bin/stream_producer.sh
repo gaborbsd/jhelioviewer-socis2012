@@ -40,7 +40,7 @@ stream_file()
 		# Format the date if DATEFORMAT is set.
 		if [ ! -z "${DATEFORMAT}" ]
 		then
-			lastmod=`stat -c "%y" ${_f}`
+			lastmod=`echo ${_f} | sed 's|\./\([[:digit:]]*\)_\([[:digit:]]*\)_\([[:digit:]]*\)__\([[:digit:]]*\)_\([[:digit:]]*\)_\([[:digit:]]*\)_.*|\1-\2-\3 \4:\5:\6|'`
 			date_formatted=`date --date="${lastmod}" "+%Y-%m-%d %H:%M:%S"`
 		fi
 
@@ -75,7 +75,7 @@ stream_file()
 	inputs=`echo ${tmpfiles} | sed -e 's| | -i |g' -e 's|^|-i |'`
 
 	# Stream to stdout
-	ffmpeg -loop 1 ${inputs} ${BITRATE} ${GOP} -t ${DURATION} -r ${FPS} ${RESOLUTION} -vcodec libtheora -y -f ogg ${dest}
+	/home/vruiz/ffmpeg/ffmpeg -loop 1 ${inputs} ${BITRATE} ${GOP} -t ${DURATION} -r ${FPS} ${RESOLUTION} -vcodec libtheora -y -f ogg ${dest}
 
 	# Clean up temporary files
 	rm -f ${tmpfiles}
@@ -235,9 +235,13 @@ do
 	srcdir=`echo ${SRCDIR} | sed "s|%%DATE%%|${datestr}|g"`
 	cd ${srcdir}
 	f=`find . -type f -regex '.*\.jp2$' | tail -n ${NO_IMAGES}`
-	stream_file
+	if [ "${last}" != "${f}" ]
+	then
+		stream_file
+		cnt=`expr ${cnt} + 1`
+		dest=`echo ${WRKDIR}/${SOURCE} | sed "s|\.ogg|,${cnt}.ogg|"`
+		find ${WRKDIR} -maxdepth 1 -type f -regex '.*\.ogg'| grep -E "${pattern}" | sort --version-sort -r | tail -n +3 | xargs rm -f
+		last=${f}
+	fi
 	sleep ${FREQ}
-	cnt=`expr ${cnt} + 1`
-	dest=`echo ${WRKDIR}/${SOURCE} | sed "s|\.ogg|,${cnt}.ogg|"`
-	find ${WRKDIR} -maxdepth 1 -type f -regex '.*\.ogg'| grep -E "${pattern}" | sort --version-sort -r | tail -n +3 | xargs rm -f
 done
