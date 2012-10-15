@@ -3,8 +3,8 @@
 <!ELEMENT global (stream-server, stream-port, stream-pass, stream-type, kakadupath,
   tmpdir, hvroot, urlbase, img-base)>
 
-<!ELEMENT entry (name, desc, observatory, instrument, detector, measurement, date?,
-  fps, resolution, duration, bitrate?, gop?, number-of-images?, renew?, palette?,
+<!ELEMENT entry (name, desc, observatory, instrument, detector, measurement,
+  fps, resolution, duration, bitrate?, gop?, renew?, palette?,
   dateformat?, region?, subchannels?)>
 
 <!ELEMENT stream-server (#PCDATA)>
@@ -23,13 +23,11 @@
 <!ELEMENT instrument (#PCDATA)>
 <!ELEMENT detector (#PCDATA)>
 <!ELEMENT measurement (#PCDATA)>
-<!ELEMENT date (#PCDATA)>
 <!ELEMENT fps (#PCDATA)>
 <!ELEMENT resolution (#PCDATA)>
 <!ELEMENT duration (#PCDATA)>
 <!ELEMENT bitrate (#PCDATA)>
 <!ELEMENT gop (#PCDATA)>
-<!ELEMENT number-of-images (#PCDATA)>
 <!ELEMENT renew (#PCDATA)>
 <!ELEMENT palette EMPTY>
 <!ELEMENT dateformat (#PCDATA)>

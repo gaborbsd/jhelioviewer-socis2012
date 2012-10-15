@@ -196,23 +196,13 @@ fi
       </xsl:if>
     </xsl:variable>
 
-    <xsl:variable name="date">
-      <xsl:choose>
-        <xsl:when test="date">
-          <xsl:value-of select="date"/>
-        </xsl:when>
-
-        <xsl:otherwise>%%DATE%%</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-
     <!--
 	Construct a source path, which can be specified either with a
 	simple source tag or with the observatory/instrument/detector/measurement
 	combination.
     -->
     <xsl:variable name="source">
-      <xsl:value-of select="concat(//img-base, '/', document('lookup.xml')//entry[key = $sourceKey]/value, '/', $date, '/', measurement)"/>
+      <xsl:value-of select="concat(//img-base, '/', document('lookup.xml')//entry[key = $sourceKey]/value)"/>
     </xsl:variable>
 
 <!-- Function starts here -->
@@ -242,6 +232,7 @@ then
       -K <xsl:value-of select="//kakadupath"/> \
       -t <xsl:value-of select="//tmpdir"/> \
       -f <xsl:value-of select="fps"/> \
+      -m <xsl:value-of select="measurement"/> \
       -n <xsl:value-of select="duration"/> \
       -p <xsl:value-of select="concat(@xml:id, '.ogg')"/> \
       <xsl:value-of select="$dateFormat"/> \

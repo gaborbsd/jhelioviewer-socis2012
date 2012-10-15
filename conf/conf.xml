@@ -3,7 +3,6 @@
 <!ENTITY dateformat '+&pct;Y-&pct;m-&pct;d &pct;H:&pct;M:&pct;S'>
 <!ENTITY duration '25'>
 <!ENTITY gop '50'>
-<!ENTITY nrimages '25'>
 <!ENTITY renew '90'>
 ]>
 
@@ -11,7 +10,7 @@
   <global>
     <stream-server>150.214.150.68</stream-server>
     <stream-port>4551</stream-port>
-    <stream-pass>changeme</stream-pass>
+    <stream-pass>asdasd</stream-pass>
     <stream-type>video/ogg</stream-type>
     <kakadupath>/home/gabor/bin</kakadupath>
     <tmpdir>/home/gabor/tmp</tmpdir>
@@ -32,7 +31,6 @@
     <resolution>2048</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -55,7 +53,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -78,7 +75,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -101,7 +97,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -124,7 +119,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -147,7 +141,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -170,7 +163,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -193,7 +185,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -216,7 +207,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -239,7 +229,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -263,7 +252,6 @@
     <resolution>512</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -286,7 +274,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -309,7 +296,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -332,7 +318,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>
@@ -355,7 +340,6 @@
     <resolution>1024</resolution>
     <duration>&duration;</duration>
     <gop>&gop;</gop>
-    <number-of-images>&nrimages;</number-of-images>
     <renew>&renew;</renew>
     <palette/>
     <dateformat>&dateformat;</dateformat>

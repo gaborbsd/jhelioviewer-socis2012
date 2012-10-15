@@ -23,7 +23,7 @@ FREQ=60
 #
 usage()
 {
-	echo "$0 [-b bitrate] [-c crop] [-d sourcedir] [-D dateformat] [-f fps] [-F renew] [-g maxgop] [-i no_images] [-K kakadu_path] [-n duration] [-p filename] [-P palette] [-r resolution] [-R reducefactor] [-t tmpdir]"
+	echo "$0 [-b bitrate] [-c crop] [-d sourcedir] [-D dateformat] [-f fps] [-F renew] [-g maxgop] [-i no_images] [-K kakadu_path] [-m measurement] [-n duration] [-p filename] [-P palette] [-r resolution] [-R reducefactor] [-t tmpdir]"
 	echo "$0 -h"
 }
 
@@ -40,7 +40,7 @@ stream_file()
 		# Format the date if DATEFORMAT is set.
 		if [ ! -z "${DATEFORMAT}" ]
 		then
-			lastmod=`echo ${_f} | sed 's|\./\([[:digit:]]*\)_\([[:digit:]]*\)_\([[:digit:]]*\)__\([[:digit:]]*\)_\([[:digit:]]*\)_\([[:digit:]]*\)_.*|\1-\2-\3 \4:\5:\6|'`
+			lastmod=`echo ${_f} | sed 's|.*/\([[:digit:]]*\)_\([[:digit:]]*\)_\([[:digit:]]*\)__\([[:digit:]]*\)_\([[:digit:]]*\)_\([[:digit:]]*\)_.*|\1-\2-\3 \4:\5:\6|'`
 			date_formatted=`date --date="${lastmod}" "+%Y-%m-%d %H:%M:%S"`
 		fi
 
@@ -75,14 +75,14 @@ stream_file()
 	inputs=`echo ${tmpfiles} | sed -e 's| | -i |g' -e 's|^|-i |'`
 
 	# Stream to stdout
-	/home/vruiz/ffmpeg/ffmpeg -loop 1 ${inputs} ${BITRATE} ${GOP} -t ${DURATION} -r ${FPS} ${RESOLUTION} -vcodec libtheora -y -f ogg ${dest}
+	/home/vruiz/ffmpeg/ffmpeg -loop 1 ${inputs} ${BITRATE} ${GOP} -t ${DURATION} -r ${FPS} ${RESOLUTION} -vcodec libtheora -y -f ogg ${dest} 2>/dev/null
 
 	# Clean up temporary files
 	rm -f ${tmpfiles}
 }
 
 # Parse command-line arguments
-while getopts ":b:c:d:D:f:F:g:i:hK:n:p:P:r:R:t:" opt; do
+while getopts ":b:c:d:D:f:F:g:i:hK:m:n:p:P:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -115,6 +115,9 @@ while getopts ":b:c:d:D:f:F:g:i:hK:n:p:P:r:R:t:" opt; do
         K)
                 KAKADUPATH=${OPTARG}
                 ;;
+	m)
+		MEAS=${OPTARG}
+		;;
         n)
                 DURATION=${OPTARG}
                 ;;
@@ -225,23 +228,42 @@ mkdir -p ${TMPDIR}
 # Main loop to iterate over the images in the source directory
 #
 
-dest=${WRKDIR}/${SOURCE}
+# XXX: redefine duration
+
 cnt=0
-dest=`echo ${WRKDIR}/${SOURCE} | sed "s|\.ogg|,${cnt}.ogg|"`
 pattern=`echo ${SOURCE} | sed 's|\.ogg|(,[[:digit:]]+)?.ogg|'`
 while :
 do
-	datestr=`date +"%Y/%m/%d"`
-	srcdir=`echo ${SRCDIR} | sed "s|%%DATE%%|${datestr}|g"`
+	datestr=`date +"%Y"`
+	srcdir=${SRCDIR}/${datestr}
 	cd ${srcdir}
-	f=`find . -type f -regex '.*\.jp2$' | tail -n ${NO_IMAGES}`
-	if [ "${last}" != "${f}" ]
+	images=`find . -type f -regex ".*${MEAS}\.jp2$" | tail -n 1750`
+	if [ "${last}" != "${images}" ]
 	then
-		stream_file
-		cnt=`expr ${cnt} + 1`
+		# Process 50 images at once to avoid command line
+		# too long errors
+		pending="${images}"
+		cnt_v=0
+		dest=`echo ${TMPDIR}/${SOURCE} | sed "s|\.ogg|,${cnt_v}.ogg|"`
+		tmpvids=
+		while [ "${pending}" != "" ]
+		do
+			f=`echo ${pending} | sed -E 's|(([^ ]+ ){0,49}[^ ]+)(.*)|\1|'`
+			pending=`echo ${pending} | sed -E 's|(([^ ]+ ){0,49}[^ ]+)(.*)|\3|'`
+			stream_file
+			tmpvids="${tmpvids} ${dest}"
+			cnt_v=`expr ${cnt_v} + 1`
+			dest=`echo ${TMPDIR}/${SOURCE} | sed "s|\.ogg|,${cnt_v}.ogg|"`
+		done
+
+		# Append generated videos into one
 		dest=`echo ${WRKDIR}/${SOURCE} | sed "s|\.ogg|,${cnt}.ogg|"`
+		inputs=`echo ${tmpvids} | sed -e 's| | -i |g' -e 's|^|-i |'`
+		/home/vruiz/ffmpeg/ffmpeg ${inputs} -vcodec libtheora -y -f ogg ${dest} 2>/dev/null
+		#rm -rf ${tmpvids}
+		cnt=`expr ${cnt} + 1`
 		find ${WRKDIR} -maxdepth 1 -type f -regex '.*\.ogg'| grep -E "${pattern}" | sort --version-sort -r | tail -n +3 | xargs rm -f
-		last=${f}
+		last="${images}"
 	fi
 	sleep ${FREQ}
 done
