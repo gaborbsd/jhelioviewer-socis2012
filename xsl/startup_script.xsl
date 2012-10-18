@@ -232,8 +232,8 @@ then
       -K <xsl:value-of select="//kakadupath"/> \
       -t <xsl:value-of select="//tmpdir"/> \
       -f <xsl:value-of select="fps"/> \
+      -i <xsl:value-of select="number-of-images"/> \
       -m <xsl:value-of select="measurement"/> \
-      -n <xsl:value-of select="duration"/> \
       -p <xsl:value-of select="concat(@xml:id, '.ogg')"/> \
       <xsl:value-of select="$dateFormat"/> \
       <xsl:value-of select="$palette"/> \

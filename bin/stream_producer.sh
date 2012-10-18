@@ -12,10 +12,9 @@
 #
 # Default values for variables
 #
-DURATION=3
-FPS=4
+FPS=25
 WRKDIR=`pwd`
-NO_IMAGES=20
+NO_IMAGES=1750
 FREQ=60
 
 #
@@ -72,17 +71,15 @@ stream_file()
 		tmpfiles="${tmpfiles} ${tmpfile}.png"
 	done
 
-	inputs=`echo ${tmpfiles} | sed -e 's| | -i |g' -e 's|^|-i |'`
-
 	# Stream to stdout
-	/home/vruiz/ffmpeg/ffmpeg -loop 1 ${inputs} ${BITRATE} ${GOP} -t ${DURATION} -r ${FPS} ${RESOLUTION} -vcodec libtheora -y -f ogg ${dest} 2>/dev/null
+	cat ${tmpfiles} | ffmpeg -f image2pipe -r 16 -vcodec png -i - ${BITRATE} ${GOP} -r ${FPS} ${RESOLUTION} -vcodec libtheora -y ${dest}
 
 	# Clean up temporary files
 	rm -f ${tmpfiles}
 }
 
 # Parse command-line arguments
-while getopts ":b:c:d:D:f:F:g:i:hK:m:n:p:P:r:R:t:" opt; do
+while getopts ":b:c:d:D:f:F:g:i:hK:m:p:P:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -118,9 +115,6 @@ while getopts ":b:c:d:D:f:F:g:i:hK:m:n:p:P:r:R:t:" opt; do
 	m)
 		MEAS=${OPTARG}
 		;;
-        n)
-                DURATION=${OPTARG}
-                ;;
 	p)
 		SOURCE=${OPTARG}
 		;;
@@ -172,15 +166,6 @@ then
 	fi
 fi
 
-# Seconds value contains one or more digit
-_DURATION=`echo ${DURATION} | grep -oE '^[[:digit:]]+$'`
-
-if [ -z ${_DURATION} ]
-then
-	echo "Invalid second per image specification. It can only contain digits." >&2
-	exit 2
-fi
-
 # FPS value contains one or more digit
 _FPS=`echo ${FPS} | grep -oE '^[[:digit:]]+$'`
 
@@ -228,40 +213,21 @@ mkdir -p ${TMPDIR}
 # Main loop to iterate over the images in the source directory
 #
 
-# XXX: redefine duration
-
 cnt=0
+dest=`echo ${WRKDIR}/${SOURCE} | sed "s|\.ogg|,${cnt}.ogg|"`
 pattern=`echo ${SOURCE} | sed 's|\.ogg|(,[[:digit:]]+)?.ogg|'`
 while :
 do
 	datestr=`date +"%Y"`
 	srcdir=${SRCDIR}/${datestr}
 	cd ${srcdir}
-	images=`find . -type f -regex ".*${MEAS}\.jp2$" | tail -n 1750`
+	images=`find . -type f -regex ".*${MEAS}\.jp2$" | tail -n ${NO_IMAGES}`
 	if [ "${last}" != "${images}" ]
 	then
-		# Process 50 images at once to avoid command line
-		# too long errors
-		pending="${images}"
-		cnt_v=0
-		dest=`echo ${TMPDIR}/${SOURCE} | sed "s|\.ogg|,${cnt_v}.ogg|"`
-		tmpvids=
-		while [ "${pending}" != "" ]
-		do
-			f=`echo ${pending} | sed -E 's|(([^ ]+ ){0,49}[^ ]+)(.*)|\1|'`
-			pending=`echo ${pending} | sed -E 's|(([^ ]+ ){0,49}[^ ]+)(.*)|\3|'`
-			stream_file
-			tmpvids="${tmpvids} ${dest}"
-			cnt_v=`expr ${cnt_v} + 1`
-			dest=`echo ${TMPDIR}/${SOURCE} | sed "s|\.ogg|,${cnt_v}.ogg|"`
-		done
-
-		# Append generated videos into one
-		dest=`echo ${WRKDIR}/${SOURCE} | sed "s|\.ogg|,${cnt}.ogg|"`
-		inputs=`echo ${tmpvids} | sed -e 's| | -i |g' -e 's|^|-i |'`
-		/home/vruiz/ffmpeg/ffmpeg ${inputs} -vcodec libtheora -y -f ogg ${dest} 2>/dev/null
-		#rm -rf ${tmpvids}
+		f="${images}"
+		stream_file
 		cnt=`expr ${cnt} + 1`
+		dest=`echo ${WRKDIR}/${SOURCE} | sed "s|\.ogg|,${cnt}.ogg|"`
 		find ${WRKDIR} -maxdepth 1 -type f -regex '.*\.ogg'| grep -E "${pattern}" | sort --version-sort -r | tail -n +3 | xargs rm -f
 		last="${images}"
 	fi

@@ -71,7 +71,7 @@
     <gop>12</gop>
 
     <!-- OPTIONAL: Number of images per video -->
-    <number-of-images>25</number-of-images>
+    <number-of-images>1750</number-of-images>
 
     <!-- OPTIONAL: Frequency in secs with which the video is regenerated -->
     <renew>90</renew>

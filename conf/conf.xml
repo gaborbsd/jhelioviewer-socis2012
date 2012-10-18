@@ -1,7 +1,8 @@
 <!DOCTYPE configuration PUBLIC "-//JHelioviewer//DTD Channel Configuration//EN" "conf.dtd" [
 <!ENTITY pct '&#37;'>
 <!ENTITY dateformat '+&pct;Y-&pct;m-&pct;d &pct;H:&pct;M:&pct;S'>
-<!ENTITY duration '25'>
+<!ENTITY daily.nr '1750'>
+<!ENTITY weekly.nr '12250'>
 <!ENTITY gop '50'>
 <!ENTITY renew '90'>
 ]>
@@ -10,7 +11,7 @@
   <global>
     <stream-server>150.214.150.68</stream-server>
     <stream-port>4551</stream-port>
-    <stream-pass>asdasd</stream-pass>
+    <stream-pass>changeme</stream-pass>
     <stream-type>video/ogg</stream-type>
     <kakadupath>/home/gabor/bin</kakadupath>
     <tmpdir>/home/gabor/tmp</tmpdir>
@@ -29,7 +30,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>2048</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -51,7 +52,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -73,7 +74,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -95,7 +96,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -117,7 +118,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -139,7 +140,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -161,7 +162,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -183,7 +184,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -205,7 +206,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -227,7 +228,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -250,7 +251,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>512</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -272,7 +273,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -294,7 +295,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -316,7 +317,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
@@ -338,7 +339,7 @@
     <measurement>1600</measurement>
     <fps>25</fps>
     <resolution>1024</resolution>
-    <duration>&duration;</duration>
+    <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
     <renew>&renew;</renew>
     <palette/>
