@@ -221,7 +221,7 @@ do
 	datestr=`date +"%Y"`
 	srcdir=${SRCDIR}/${datestr}
 	cd ${srcdir}
-	images=`find . -type f -regex ".*${MEAS}\.jp2$" | tail -n ${NO_IMAGES}`
+	images=`find . -type f -regex ".*${MEAS}\.jp2$" | sort | tail -n ${NO_IMAGES}`
 	if [ "${last}" != "${images}" ]
 	then
 		f="${images}"
