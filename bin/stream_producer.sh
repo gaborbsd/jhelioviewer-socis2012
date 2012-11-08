@@ -57,10 +57,11 @@ stream_file()
 		# Only add date if DATEFORMAT is set
 		if [ ! -z "${DATEFORMAT}" ]
 		then
-			convert -size 110x14 xc:none -gravity center \
+			convert -font /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansMono-Bold.ttf \
+				-size 125x14 xc:none -gravity center \
 				-stroke black -strokewidth 2 \
 				-annotate 0 "${date_formatted}" \
-				-background none -shadow 110x3+0+0 +repage \
+				-background none -shadow 125x3+0+0 +repage \
 				-stroke none -fill white \
 				-annotate 0 "${date_formatted}" \
 				${tmpfile}.png  +swap -gravity south -geometry +0-3 \
@@ -221,7 +222,7 @@ do
 	datestr=`date +"%Y"`
 	srcdir=${SRCDIR}/${datestr}
 	cd ${srcdir}
-	images=`find . -type f -regex ".*${MEAS}\.jp2$" | sort | tail -n ${NO_IMAGES}`
+	images=`find . -type f -regex ".*${MEAS}\.jp2$" | tail -n ${NO_IMAGES}`
 	if [ "${last}" != "${images}" ]
 	then
 		f="${images}"
