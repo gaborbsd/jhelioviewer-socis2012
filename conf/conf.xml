@@ -28,7 +28,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>2048</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -50,7 +51,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -72,7 +74,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -94,7 +97,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -116,7 +120,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -138,7 +143,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -160,7 +166,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -182,7 +189,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -204,7 +212,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -226,7 +235,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -249,7 +259,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>512</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -271,7 +282,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -293,7 +305,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -315,7 +328,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>
@@ -337,7 +351,8 @@
     <instrument>AIA</instrument>
     <detector>AIA</detector>
     <measurement>1600</measurement>
-    <fps>25</fps>
+    <infps>16</infps>
+    <outfps>25</outfps>
     <resolution>1024</resolution>
     <number-of-images>&daily.nr;</number-of-images>
     <gop>&gop;</gop>

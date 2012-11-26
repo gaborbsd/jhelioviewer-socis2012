@@ -4,7 +4,7 @@
   tmpdir, hvroot, urlbase, img-base)>
 
 <!ELEMENT entry (name, desc, observatory, instrument, detector, measurement,
-  fps, resolution, number-of-images, bitrate?, gop?, renew?, palette?,
+  infps, outfps, resolution, number-of-images, bitrate?, gop?, renew?, palette?,
   dateformat?, region?, subchannels?)>
 
 <!ELEMENT stream-server (#PCDATA)>
@@ -23,7 +23,8 @@
 <!ELEMENT instrument (#PCDATA)>
 <!ELEMENT detector (#PCDATA)>
 <!ELEMENT measurement (#PCDATA)>
-<!ELEMENT fps (#PCDATA)>
+<!ELEMENT infps (#PCDATA)>
+<!ELEMENT outfps (#PCDATA)>
 <!ELEMENT resolution (#PCDATA)>
 <!ELEMENT number-of-images (#PCDATA)>
 <!ELEMENT bitrate (#PCDATA)>

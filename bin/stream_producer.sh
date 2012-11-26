@@ -12,7 +12,7 @@
 #
 # Default values for variables
 #
-FPS=25
+OUTFPS=25
 WRKDIR=`pwd`
 NO_IMAGES=1750
 FREQ=60
@@ -22,7 +22,7 @@ FREQ=60
 #
 usage()
 {
-	echo "$0 [-b bitrate] [-c crop] [-d sourcedir] [-D dateformat] [-f fps] [-F renew] [-g maxgop] [-i no_images] [-K kakadu_path] [-m measurement] [-n duration] [-p filename] [-P palette] [-r resolution] [-R reducefactor] [-t tmpdir]"
+	echo "$0 [-b bitrate] [-c crop] [-d sourcedir] [-D dateformat] [-f outfps] [-F renew] [-g maxgop] [-i no_images] [-I infps] [-K kakadu_path] [-m measurement] [-n duration] [-p filename] [-P palette] [-r resolution] [-R reducefactor] [-t tmpdir]"
 	echo "$0 -h"
 }
 
@@ -73,14 +73,14 @@ stream_file()
 	done
 
 	# Stream to stdout
-	cat ${tmpfiles} | ffmpeg -f image2pipe -r 16 -vcodec png -i - ${BITRATE} ${GOP} -r ${FPS} ${RESOLUTION} -vcodec libtheora -y ${dest}
+	cat ${tmpfiles} | ffmpeg -f image2pipe -r ${INFPS} -vcodec png -i - ${BITRATE} ${GOP} -r ${OUTFPS} ${RESOLUTION} -vcodec libtheora -y ${dest}
 
 	# Clean up temporary files
 	rm -f ${tmpfiles}
 }
 
 # Parse command-line arguments
-while getopts ":b:c:d:D:f:F:g:i:hK:m:p:P:r:R:t:" opt; do
+while getopts ":b:c:d:D:f:F:g:i:I:hK:m:p:P:r:R:t:" opt; do
         case ${opt} in
 	h)
 		usage
@@ -99,7 +99,7 @@ while getopts ":b:c:d:D:f:F:g:i:hK:m:p:P:r:R:t:" opt; do
 		DATEFORMAT="${OPTARG}"
 		;;
 	f)
-		FPS=${OPTARG}
+		OUTFPS=${OPTARG}
 		;;
 	F)
 		FREQ="${OPTARG}"
@@ -109,6 +109,9 @@ while getopts ":b:c:d:D:f:F:g:i:hK:m:p:P:r:R:t:" opt; do
 		;;
 	i)
 		NO_IMAGES="${OPTARG}"
+		;;
+	I)
+		INFPS=${OPTARG}
 		;;
         K)
                 KAKADUPATH=${OPTARG}
@@ -168,11 +171,19 @@ then
 fi
 
 # FPS value contains one or more digit
-_FPS=`echo ${FPS} | grep -oE '^[[:digit:]]+$'`
+_OUTFPS=`echo ${OUTFPS} | grep -oE '^[[:digit:]]+$'`
 
-if [ -z ${_FPS} ]
+if [ -z ${_OUTFPS} ]
 then
-        echo "Invalid fps specification. It can only contain digits." >&2
+        echo "Invalid output fps specification. It can only contain digits." >&2
+        exit 2
+fi
+
+_INFPS=`echo ${INFPS} | grep -oE '^[[:digit:]]+$'`
+
+if [ -z ${_INFPS} ]
+then
+        echo "Invalid input fps specification. It can only contain digits." >&2
         exit 2
 fi
 
@@ -222,7 +233,7 @@ do
 	datestr=`date +"%Y"`
 	srcdir=${SRCDIR}/${datestr}
 	cd ${srcdir}
-	images=`find . -type f -regex ".*${MEAS}\.jp2$" | tail -n ${NO_IMAGES}`
+	images=`find . -type f -regex ".*${MEAS}\.jp2$" | sort --version-sort | tail -n ${NO_IMAGES}`
 	if [ "${last}" != "${images}" ]
 	then
 		f="${images}"

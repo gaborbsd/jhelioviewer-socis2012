@@ -55,8 +55,13 @@
     <detector>EIT</detector>
     <measurement>304</measurement>
 
+    <!-- Input FPS (one image is considered one frame in a video with infps
+         frames per second and frames are repeated to get the output FPS
+     -->
+    <infps>16</infps>
+
     <!-- Frame per seconds in the generated video -->
-    <fps>25</fps>
+    <outfps>25</outfps>
 
     <!-- Resolution of the generated video (1:1 proportion) -->
     <resolution>512</resolution>
