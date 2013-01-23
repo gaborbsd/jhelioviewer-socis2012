@@ -191,7 +191,7 @@ fi
     <xsl:variable name="palette">
       <xsl:if test="palette">
         <xsl:text> -P "</xsl:text>
-        <xsl:value-of select="concat(//hvroot, '/', $palettePath, '/', $paletteFile)"/>
+        <xsl:value-of select="concat(//apiroot, '/', $palettePath, '/', $paletteFile)"/>
         <xsl:text>"</xsl:text>
       </xsl:if>
     </xsl:variable>

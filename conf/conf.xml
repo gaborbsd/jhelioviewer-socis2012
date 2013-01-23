@@ -16,6 +16,7 @@
     <kakadupath>/home/gabor/bin</kakadupath>
     <tmpdir>/home/gabor/tmp</tmpdir>
     <hvroot>/home/gabor</hvroot>
+    <apiroot>/home/gabor</apiroot>
     <urlbase>http://kovesdan.org/jhv</urlbase>
     <img-base>/home/gabor/img/delphi.nascom.nasa.gov/jp2</img-base>
   </global>

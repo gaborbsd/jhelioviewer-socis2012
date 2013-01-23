@@ -31,6 +31,9 @@
     <!-- Root directory where helioviewer.org is installed -->
     <hvroot>/home/hv</hvroot>
 
+    <!-- Root directory where the api subdirectory resides -->
+    <apiroot>/home/hv</apiroot>
+
     <!-- The base URL, where the streaming pages are installed -->
     <urlbase>http://stream.example.com</urlbase>
 
