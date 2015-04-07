@@ -1,0 +1,1 @@
+This project contains the work done in SOCIS 2012 (http://sophia.estec.esa.int/socis2012/?q=about) for JHelioViewer. The objective of this project is to create a HTML5 streaming channel for JHelioViewer with several temporal/spatial profiles and to decrease latency in the Java client.
